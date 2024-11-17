@@ -1,6 +1,6 @@
 # Final Assignment - Fresh Fusion Sushi Restaurant
 - Group name: Sushi Lover
-- Group members: Jiahui Pan(AE8278), Tingting Huang ()
+- Group members: Jiahui Pan(AE8278), Tingting Huang (AE8277)
 - Page Link: 
 
 ## Project Overview
