@@ -13,14 +13,17 @@ build:
   script:
     - npm install
     - npm run build
+    - cp -r build/* public/
   artifacts:
     paths:
       - public
 
 pages:
   stage: deploy
+  dependencies:
+    - build
   script:
-    - mv public/ ./public
+    - echo 'Deploy to GitLab Pages'
   artifacts:
     paths:
       - public

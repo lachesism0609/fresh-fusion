@@ -15,9 +15,10 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://sushi-lover.gitlab.io/fresh-fusion",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=$CI_PAGES_URL react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
