@@ -1,40 +1,21 @@
+# The Docker image that will be used to build your app
 image: node:latest
-
-stages:
-  - build
-  - deploy
-
-cache:
-  paths:
-    - fresh-fusion/node_modules/
-
-build:
-  stage: build
-  tags:
-    - docker
-    - general
-  script:
-    - cd fresh-fusion
-    - npm install
-    - npm run build
-    - mkdir -p ../public
-    - cp -r build/* ../public/
-  artifacts:
-    paths:
-      - public
-
+# Functions that should be executed before the build script is run
+before_script:
+  - cd fresh-fusion
+  - npm install
+  - npm run build
+  - mkdir -p ../public
+  - cp -r build/* ../public/
 pages:
-  stage: deploy
-  tags:
-    - docker
-    - general
-  dependencies:
-    - build
   script:
-    - ls -la public/ 
+    - ls -la public/
     - echo 'Deploy to GitLab Pages'
   artifacts:
     paths:
+      # The folder that contains the files to be exposed at the Page URL
       - public
-  only:
-    - master
+  rules:
+    # This ensures that only pushes to the default branch will trigger
+    # a pages deploy
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
