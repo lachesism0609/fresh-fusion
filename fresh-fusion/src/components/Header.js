@@ -74,10 +74,10 @@ export const Header = () => {
 
                     {/* Contact Section */}
                     <div className="absolute w-[246px] h-[84px] top-[152px] left-[68px]">
-                        <div className="font-light text-black text-xl mb-4">
+                        <div className="font-light text-black text-xl mb-8">
                             Contact Us
                         </div>
-                        <div className="flex space-x-6">
+                        <div className="flex justify-between w-full">
                             <img src={akarIconsInstagramFill} alt="Instagram" className="w-[30px] h-[31px]" />
                             <img src={akarIconsWhatsappFill} alt="WhatsApp" className="w-[30px] h-[31px]" />
                             <img src={brandicoFacebook} alt="Facebook" className="w-3.5 h-[31px]" />

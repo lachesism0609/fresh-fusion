@@ -8,7 +8,7 @@ export const Home = () => {
         <div className="min-h-screen bg-white">
             <Header />
             
-            <main className="container mx-auto px-4 md:px-8 lg:px-16 pt-[138px] pb-8 md:pb-16">
+            <main className="container mx-auto px-4 md:px-8 lg:px-16 pt-[80px] pb-8 md:pb-16">
                 <div className="max-w-[390px] md:max-w-[768px] lg:max-w-[1200px] mx-auto">
                     <div className="md:flex md:items-center md:justify-between">
                         <div className="md:w-1/2 lg:w-[45%]">
