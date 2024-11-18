@@ -11,7 +11,8 @@ cache:
 build:
   stage: build
   tags:
-    - shared
+    - docker
+    - general
   script:
     - cd fresh-fusion
     - npm install
@@ -25,7 +26,8 @@ build:
 pages:
   stage: deploy
   tags:
-    - shared
+    - docker
+    - general
   dependencies:
     - build
   script:
