@@ -1,4 +1,4 @@
-image: node:latest 
+image: node:latest
 
 stages:
   - build
@@ -6,14 +6,16 @@ stages:
 
 cache:
   paths:
-    - node_modules/
+    - fresh-fusion/node_modules/
 
 build:
   stage: build
   script:
+    - cd fresh-fusion
     - npm install
     - npm run build
-    - cp -r build/* public/
+    - mkdir -p ../public
+    - cp -r build/* ../public/
   artifacts:
     paths:
       - public
