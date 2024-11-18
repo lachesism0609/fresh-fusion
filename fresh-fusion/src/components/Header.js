@@ -4,7 +4,7 @@ import Book from "../assets/Book 2.svg";
 import Marker from "../assets/Marker 02.svg";
 import evaBarChartFill from "../assets/eva_bar-chart-fill.svg";
 import evaCloseFill from "../assets/clarity_times-line.svg";
-import logoTransparent1 from "../assets/logo_transparent 1.png";
+import logoTransparent from "../assets/logo_transparent.png";
 import akarIconsInstagramFill from "../assets/akar-icons_instagram-fill.svg";
 import akarIconsTwitterFill from "../assets/akar-icons_twitter-fill.svg";
 import akarIconsWhatsappFill from "../assets/akar-icons_whatsapp-fill.svg";
@@ -22,7 +22,7 @@ export const Header = () => {
                         <img
                             className="h-[113px] w-auto"
                             alt="Fresh Fusion Logo"
-                            src={logoTransparent1}
+                            src={logoTransparent}
                         />
                     </Link>
 
