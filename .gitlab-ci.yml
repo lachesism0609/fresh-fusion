@@ -10,7 +10,7 @@ before_script:
 pages:
   tags:
     - docker
-    - sushilover
+    - genneral
   script:
     - ls -la public/
     - echo 'Deploy to GitLab Pages'
