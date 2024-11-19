@@ -3,6 +3,7 @@ image: node:latest
 # Functions that should be executed before the build script is run
 before_script:
   - cd fresh-fusion
+  - npm install --save-dev @babel/plugin-proposal-private-property-in-object
   - npm install
   - npm run build
   - mkdir -p ../public
@@ -11,7 +12,6 @@ pages:
   tags:
     - docker
     - general
-    - labranet
   script:
     - ls -la public/
     - echo 'Deploy to GitLab Pages'
