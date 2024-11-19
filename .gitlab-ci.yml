@@ -1,24 +1,51 @@
 # The Docker image that will be used to build your app
 image: node:latest
-# Functions that should be executed before the build script is run
-before_script:
-  - cd fresh-fusion-test
-  - npm install
-  - npm run build --verbose
-  - mkdir -p ../public
-  - cp -r build/* ../public/
+
+variables:
+  NPM_CONFIG_CACHE: ".npm"
+
+cache:
+  paths:
+    - fresh-fusion-test/node_modules/
+    - .npm/
+
 pages:
   tags:
     - docker
     - general
   script:
-    - ls -la public/
-    - echo 'Deploy to GitLab Pages'
+    # Debug current state
+    - pwd
+    - ls -la
+    
+    # Navigate and prepare
+    - cd fresh-fusion-test
+    - rm -rf node_modules package-lock.json
+    - rm -rf build
+    
+    # Install with specific npm version
+    - npm install -g npm@9.8.1
+    - npm cache clean --force
+    - npm install
+    
+    # Build with environment variables
+    - NODE_ENV=production CI=false npm run build --verbose
+    
+    # Debug build output
+    - ls -la build/
+    - cat build/index.html || true
+    
+    # Deploy
+    - cd ..
+    - mkdir -p public
+    - cp -r fresh-fusion-test/build/* public/
+  
   artifacts:
     paths:
-      # The folder that contains the files to be exposed at the Page URL
       - public
+    reports:
+      junit: fresh-fusion-test/junit.xml
+    when: always
+  
   rules:
-    # This ensures that only pushes to the default branch will trigger
-    # a pages deploy
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
