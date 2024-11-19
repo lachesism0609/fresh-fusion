@@ -14,28 +14,55 @@ pages:
     - docker
     - general
   script:
-    # Debug current state
-    - pwd
-    - ls -la
-    
-    # Navigate and prepare
+    # Debug package.json
     - cd fresh-fusion-test
-    - rm -rf node_modules package-lock.json
-    - rm -rf build
+    - echo "Checking package.json content:"
+    - cat package.json
     
-    # Install with specific npm version
-    - npm install -g npm@9.8.1
-    - npm cache clean --force
+    # Fix package.json if corrupted
+    - |
+      cat > package.json << 'EOL'
+      {
+        "name": "fresh-fusion-test",
+        "version": "0.1.0",
+        "private": true,
+        "dependencies": {
+          "@testing-library/jest-dom": "^5.17.0",
+          "@testing-library/react": "^13.4.0",
+          "@testing-library/user-event": "^13.5.0",
+          "framer-motion": "^11.11.17",
+          "leaflet": "^1.9.4",
+          "react": "^18.3.1",
+          "react-dom": "^18.3.1",
+          "react-icons": "^5.3.0",
+          "react-router-dom": "^6.28.0",
+          "react-scripts": "5.0.1",
+          "web-vitals": "^2.1.4"
+        },
+        "scripts": {
+          "start": "react-scripts start",
+          "build": "react-scripts build",
+          "test": "react-scripts test",
+          "eject": "react-scripts eject"
+        },
+        "eslintConfig": {
+          "extends": ["react-app"]
+        },
+        "browserslist": {
+          "production": [">0.2%", "not dead", "not op_mini all"],
+          "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+        },
+        "devDependencies": {
+          "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+        }
+      }
+      EOL
+    
+    # Install and build
     - npm install
+    - NODE_ENV=production CI=false npm run build
     
-    # Build with environment variables
-    - NODE_ENV=production CI=false npm run build --verbose
-    
-    # Debug build output
-    - ls -la build/
-    - cat build/index.html || true
-    
-    # Deploy
+    # Move build files
     - cd ..
     - mkdir -p public
     - cp -r fresh-fusion-test/build/* public/
