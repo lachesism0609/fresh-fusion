@@ -2,7 +2,7 @@
 image: node:latest
 # Functions that should be executed before the build script is run
 before_script:
-  - cd fresh-fusion
+  - cd fresh-fusion-test
   - npm install
   - npm run build
   - mkdir -p ../public
