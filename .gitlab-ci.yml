@@ -15,14 +15,25 @@ pages:
     - general
   script:
     - cd fresh-fusion
+    # Debug package.json
+    - cat package.json
+    # Clean install
     - rm -rf node_modules package-lock.json
     - npm cache clean --force
-    - npm install --no-optional
-    - CI=false npm run build
+    # Install with verbose logging
+    - npm install --verbose
+    # Build with debugging
+    - NODE_ENV=production CI=false npm run build --verbose
+    # Check build output
+    - ls -la build/
+    # Move to public
     - mkdir -p ../public
     - cp -r build/* ../public/
   artifacts:
     paths:
       - public
+    when: always
+    reports:
+      junit: fresh-fusion/junit.xml
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
