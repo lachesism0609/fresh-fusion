@@ -1,32 +1,21 @@
 image: node:latest
 
-variables:
-  NPM_CONFIG_CACHE: ".npm"
-
-cache:
-  paths:
-    - .npm/
-    - fresh-fusion/node_modules/
+before_script:
+  - cd fresh-fusion
+  - npm install
+  - npm run build
+  - mkdir -p ../public
+  - cp -r build/* ../public/
 
 pages:
   tags:
     - docker
     - sushilover
   script:
-    - cd fresh-fusion
-    - cat package.json
-    - rm -rf node_modules package-lock.json
-    - npm cache clean --force
-    - npm install --verbose
-    - NODE_ENV=production CI=false npm run build --verbose
-    - ls -la build/
-    - mkdir -p ../public
-    - cp -r build/* ../public/
+    - ls -la public/
+    - echo 'Deploy to GitLab Pages'
   artifacts:
     paths:
       - public
-    when: always
-    reports:
-      junit: fresh-fusion/junit.xml
   rules:
     - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
