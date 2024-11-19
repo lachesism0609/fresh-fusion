@@ -4,7 +4,7 @@ image: node:latest
 before_script:
   - cd fresh-fusion-test
   - npm install
-  - npm run build
+  - npm run build --verbose
   - mkdir -p ../public
   - cp -r build/* ../public/
 pages:
