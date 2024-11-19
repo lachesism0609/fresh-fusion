@@ -3,7 +3,9 @@ image: node:latest
 # Functions that should be executed before the build script is run
 before_script:
   - cd fresh-fusion
+  - rm -rf node_modules package-lock.json
   - npm install
+  - npm cache clean --force
   - npm run build
   - mkdir -p ../public
   - cp -r build/* ../public/
