@@ -1,5 +1,4 @@
-# The Docker image that will be used to build your app
-image: node:latest
+image: mcr.microsoft.com/windows/servercore/node:latest
 
 variables:
   NPM_CONFIG_CACHE: ".npm"
@@ -12,21 +11,15 @@ cache:
 pages:
   tags:
     - docker
-    - general
+    - sushilover
   script:
     - cd fresh-fusion
-    # Debug package.json
     - cat package.json
-    # Clean install
     - rm -rf node_modules package-lock.json
     - npm cache clean --force
-    # Install with verbose logging
     - npm install --verbose
-    # Build with debugging
     - NODE_ENV=production CI=false npm run build --verbose
-    # Check build output
     - ls -la build/
-    # Move to public
     - mkdir -p ../public
     - cp -r build/* ../public/
   artifacts:
