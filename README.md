@@ -2,7 +2,7 @@
 - Group name: Sushi Lover
 - Group members: Jiahui Pan(AE8278), Tingting Huang (AE8277)
 - Prototype link: https://www.figma.com/design/BOhTVI8MOR0ihdPJvjptcG/Fresh-Fusion?m=auto&t=J2rrQVKeyjsK1Yac-1
-- Page Link: https://sushi-lover-it-ff-2024-t04-33a88f12d44e5b60c71991f7f8e8348a8a95.pages.labranet.jamk.fi
+- Page Link: https://ae8278.pages.labranet.jamk.fi/sushi-lover
 
 ## Project Overview
 An interactive web application for Fresh Fusion, an all-you-can-eat sushi restaurant, featuring modern design and seamless user experience.
