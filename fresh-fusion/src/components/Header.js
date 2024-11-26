@@ -66,7 +66,7 @@ export const Header = () => {
 
                     {/* Address Link */}
                     <div className="absolute w-[253px] h-[25px] top-[94px] left-[68px] flex justify-between items-center">
-                        <Link to="/location" className="font-light text-black text-xl">
+                        <Link to="/address" className="font-light text-black text-xl">
                             Address
                         </Link>
                         <img src={Marker} alt="Location" className="w-6 h-6" />

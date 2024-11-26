@@ -1,16 +1,39 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Home } from './pages/HomePage';
+import React from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import HomePage from './pages/HomePage';
+import ErrorPage from './pages/ErrorPage';
 import './App.css';
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/menu",
+    },
+    {
+      path: "/address",
+    },
+    {
+      path: "*",
+      element: <ErrorPage />,
+    }
+  ], {
+    basename: '/sushi-lover'
+  });
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<div>Menu Page (Coming Soon)</div>} />
-      </Routes>
-    </BrowserRouter>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
   );
 }
 
 export default App;
+

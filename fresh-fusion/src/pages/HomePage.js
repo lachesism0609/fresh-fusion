@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 import { NavigationButton } from "../components/Button/NavigationButton";
 import homeSushiImage from "../assets/homeSushi.jpg";
 
-export const Home = () => {
+export const HomePage = () => {
     return (
         <div className="min-h-screen bg-white">
             <Header />
@@ -54,4 +54,4 @@ export const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;
