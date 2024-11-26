@@ -15,12 +15,6 @@ function App() {
       errorElement: <ErrorPage />,
     },
     {
-      path: "/menu",
-    },
-    {
-      path: "/address",
-    },
-    {
       path: "*",
       element: <ErrorPage />,
     }
