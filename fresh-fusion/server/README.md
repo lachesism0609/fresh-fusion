@@ -1,0 +1,100 @@
+# Web Services and Server Programming - Fresh Fusion Backend
+- **Group**: Sushi Lover
+- **Members**: 
+  - Jiahui Pan (AE8278)
+  - Tingting Huang (AE8277)
+
+## Project Overview
+Backend services for Fresh Fusion sushi restaurant web application, providing APIs for menu management, order processing, and user authentication.
+
+## Technical Stack
+### Backend Framework
+- **Node.js** with **Express.js**
+  - RESTful API architecture
+  - MVC pattern implementation
+  - Middleware for authentication and logging
+
+### Database
+- **MongoDB**
+  - Document-based storage for menu items
+  - User authentication data
+  - Order management
+
+### Additional Technologies
+- **JWT** for authentication
+- **Mongoose** for database modeling
+- **Bcrypt** for password hashing
+- **Cors** for cross-origin resource sharing
+- **Express-validator** for input validation
+
+## API Endpoints Planning
+1. **Menu Management**
+   - GET /api/menu - Retrieve all menu items
+   - GET /api/menu/:category - Get items by category
+   - POST /api/menu - Add new menu item (admin)
+   - PUT /api/menu/:id - Update menu item (admin)
+
+2. **User Management**
+   - POST /api/auth/register - User registration
+   - POST /api/auth/login - User authentication
+   - GET /api/user/profile - Get user profile
+
+3. **Order System**
+   - POST /api/orders - Create new order
+   - GET /api/orders/:userId - Get user orders
+   - PUT /api/orders/:id - Update order status
+
+## Database Schema Design
+1. **Menu Items**
+   - Name
+   - Category
+   - Price
+   - Description
+   - Image URL
+   - Dietary flags
+
+2. **Users**
+   - Username
+   - Email
+   - Password (hashed)
+   - Role (customer/admin)
+
+3. **Orders**
+   - User reference
+   - Items
+   - Total price
+   - Status
+   - Timestamp
+
+## Division of Labor
+- **Jiahui Pan**:
+  - API development
+  - Database implementation
+  - Authentication system
+
+- **Tingting Huang**:
+  - Order management system
+  - Testing
+  - Documentation
+
+## Development Timeline
+1. **Week 1: Setup & Planning**
+   - Project structure setup
+   - Database design
+   - API documentation
+
+2. **Week 2-3: Core Development**
+   - API implementation
+   - Database integration
+   - Authentication system
+
+3. **Week 4: Testing & Documentation**
+   - API testing
+   - Security testing
+   - Documentation completion
+
+## Testing Strategy
+- Unit testing for API endpoints
+- Integration testing for database operations
+- Security testing for authentication
+- Load testing for performance verification
