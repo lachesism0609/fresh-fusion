@@ -15,10 +15,18 @@ Backend services for Fresh Fusion sushi restaurant web application, providing AP
   - Middleware for authentication and logging
 
 ### Database
-- **MongoDB**
+- **MongoDB Atlas**
+  - Cloud-hosted MongoDB service
   - Document-based storage for menu items
   - User authentication data
   - Order management
+
+### Deployment
+- **Render**
+  - Cloud platform for backend deployment
+  - Automatic deployments from GitHub
+  - Environment variables management
+  - SSL/TLS encryption
 
 ### Additional Technologies
 - **JWT** for authentication
@@ -74,24 +82,27 @@ Backend services for Fresh Fusion sushi restaurant web application, providing AP
 
 - **Jiahui Pan**:
   - Order management system
-  - Testing
-  - Documentation
+  - Testing and Documentation
+  - Render deployment and CI/CD setup
 
 ## Development Timeline
 1. **Week 1: Setup & Planning**
    - Project structure setup
    - Database design
    - API documentation
+   - Render deployment configuration
 
 2. **Week 2-3: Core Development**
    - API implementation
    - Database integration
    - Authentication system
+   - CI/CD pipeline setup with Render
 
 3. **Week 4: Testing & Documentation**
    - API testing
    - Security testing
    - Documentation completion
+   - Production deployment and monitoring
 
 ## Testing Strategy
 - Unit testing for API endpoints
