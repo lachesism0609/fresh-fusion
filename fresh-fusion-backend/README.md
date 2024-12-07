@@ -67,12 +67,12 @@ Backend services for Fresh Fusion sushi restaurant web application, providing AP
    - Timestamp
 
 ## Division of Labor
-- **Jiahui Pan**:
+- **Tingting Huang**:
   - API development
   - Database implementation
   - Authentication system
 
-- **Tingting Huang**:
+- **Jiahui Pan**:
   - Order management system
   - Testing
   - Documentation
