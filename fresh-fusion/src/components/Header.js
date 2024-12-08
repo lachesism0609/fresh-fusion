@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Book from "../assets/Book 2.svg";
 import Marker from "../assets/Marker 02.svg";
 import evaBarChartFill from "../assets/eva_bar-chart-fill.svg";
@@ -12,6 +12,13 @@ import brandicoFacebook from "../assets/brandico_facebook.svg";
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const isLoggedIn = localStorage.getItem('token') !== null;
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
 
     return (
         <header className="w-full bg-white shadow-lg relative">
@@ -83,6 +90,27 @@ export const Header = () => {
                             <img src={brandicoFacebook} alt="Facebook" className="w-3.5 h-[31px]" />
                             <img src={akarIconsTwitterFill} alt="Twitter" className="w-[30px] h-[31px]" />
                         </div>
+                    </div>
+
+                    {/* Auth Buttons */}
+                    <div className="absolute w-[254px] h-[25px] top-[250px] left-[68px] flex justify-between items-center">
+                        {isLoggedIn ? (
+                            <>
+                                <Link to="/orders" className="font-light text-black text-xl">
+                                    My Orders
+                                </Link>
+                                <button 
+                                    onClick={handleLogout}
+                                    className="font-light text-pink700 text-xl"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <Link to="/login" className="font-light text-pink700 text-xl">
+                                Login
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

@@ -8,22 +8,12 @@ const bcrypt = require('bcryptjs');
 const { authenticateJWT } = require('../middleware/authMiddleware');
 
 router.post('/register', async (req, res) => {
-  const { name, email, username, password } = req.body;
-
   try {
-    // Validate input
-    if (!name || !email || !username || !password) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
-
-    // Check existing user
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { username }] 
-    });
+    const { name, email, username, password } = req.body;
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    
     if (existingUser) {
-      return res.status(400).json({ 
-        error: 'Email or username already exists' 
-      });
+      return res.status(400).json({ error: 'Username or email already exists' });
     }
 
     const user = new User({ name, email, username, password });
@@ -32,71 +22,47 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '24h' }
     );
 
-    res.status(201).json({
-      message: 'User registered successfully',
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        username: user.username,
-        role: user.role
-      }
-    });
+    res.status(201).json({ token, username: user.username, role: user.role });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Registration failed' });
   }
 });
 
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    const user = await User.findOne({ 
-      $or: [{ email: username }, { username }] 
-    });
+    const user = await User.findOne({ username });
+    
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'User not found' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(401).json({ error: 'Invalid password' });
     }
 
     const token = jwt.sign(
       { userId: user._id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '24h' }
     );
 
-    res.json({
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        username: user.username,
-        role: user.role
-      }
-    });
+    res.json({ token, username: user.username, role: user.role });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Login failed' });
   }
 });
 
 router.get('/profile', authenticateJWT, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Error fetching profile' });
   }
 });
 

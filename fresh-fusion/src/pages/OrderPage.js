@@ -4,23 +4,50 @@ import axios from "axios";
 
 export const OrderPage = () => {
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch orders from backend
         const fetchOrders = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('YOUR_API_URL/api/orders/my-orders', {
+                const response = await axios.get(`http://localhost:5000/api/orders/my-orders`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setOrders(response.data);
+                setError(null);
             } catch (error) {
+                setError('Failed to fetch orders. Please try again later.');
                 console.error('Error fetching orders:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchOrders();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-white">
+                <Header />
+                <main className="container mx-auto px-4 pt-[80px]">
+                    <div className="text-center">Loading orders...</div>
+                </main>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-white">
+                <Header />
+                <main className="container mx-auto px-4 pt-[80px]">
+                    <div className="text-center text-red-600">{error}</div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-white">
