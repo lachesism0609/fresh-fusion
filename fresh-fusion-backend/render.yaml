@@ -2,9 +2,9 @@ services:
   - type: web
     name: fresh-fusion-api
     env: node
-    plan: free
-    buildCommand: cd fresh-fusion-backend && npm install
-    startCommand: cd fresh-fusion-backend && node server.js
+    rootDir: fresh-fusion-backend
+    buildCommand: npm install
+    startCommand: node server.js
     envVars:
       - key: MONGODB_URI
         sync: false

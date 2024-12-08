@@ -43,8 +43,12 @@ mirror_to_github:
     - git config --global user.name "${GITLAB_USER_NAME}"
     - git config --global user.email "${GITLAB_USER_EMAIL}"
   script:
+    - cd fresh-fusion-backend
+    - git init
+    - git add .
+    - git commit -m "Update backend"
     - git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${GITHUB_REPO}.git
-    - git push --mirror github
+    - git push -f github main
   only:
     - main
   variables:
