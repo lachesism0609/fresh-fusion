@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../components/Header";
+import { useNavigate } from "react-router-dom";
 
 export const MenuPage = () => {
     const [menuItems, setMenuItems] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [loading, setLoading] = useState(true);
+    const [cart, setCart] = useState([]);
+    const navigate = useNavigate();
+    const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
     const categories = ['all', 'Nigiri', 'Maki', 'Appetizers', 'Special Rolls'];
 
@@ -27,9 +31,48 @@ export const MenuPage = () => {
         fetchMenuItems();
     }, [fetchMenuItems]);
 
+    // Add function to check if user is logged in
+    const isLoggedIn = () => {
+        return localStorage.getItem('token') !== null;
+    };
+
+    // Modify addToCart function
+    const addToCart = (menuItem) => {
+        if (!isLoggedIn()) {
+            setShowLoginPrompt(true);
+            setTimeout(() => setShowLoginPrompt(false), 3000);
+            return;
+        }
+        setCart(prev => [...prev, {
+            menuItemId: menuItem._id,
+            quantity: 1,
+            price: menuItem.price,
+            title: menuItem.title
+        }]);
+    };
+
+    const removeFromCart = (itemId) => {
+        setCart(prev => prev.filter(item => item.menuItemId !== itemId));
+    };
+
     return (
         <div className="min-h-screen bg-white">
             <Header />
+            {!isLoggedIn() && (
+                <div className="fixed top-20 right-4">
+                    <button 
+                        onClick={() => navigate('/login')}
+                        className="bg-pink700 text-white px-4 py-2 rounded-md hover:bg-pink-800"
+                    >
+                        Login
+                    </button>
+                </div>
+            )}
+            {showLoginPrompt && (
+                <div className="fixed top-20 right-4 bg-pink700 text-white p-4 rounded-md shadow-lg z-50">
+                    Please login first to add items to cart
+                </div>
+            )}
             
             <main className="container mx-auto px-4 md:px-8 lg:px-16 pt-[80px] pb-8 md:pb-16">
                 <div className="max-w-[390px] md:max-w-[768px] lg:max-w-[1200px] mx-auto">
@@ -89,9 +132,44 @@ export const MenuPage = () => {
                                                 </span>
                                             ))}
                                         </div>
+                                        <button onClick={() => addToCart(item)}>Add to Cart</button>
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                    )}
+                    {cart.length > 0 && (
+                        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
+                            <div className="container mx-auto">
+                                <h3 className="text-xl mb-2">Shopping Cart ({cart.length} items)</h3>
+                                <div className="max-h-40 overflow-y-auto mb-4">
+                                    {cart.map((item) => (
+                                        <div key={item.menuItemId} className="flex justify-between items-center py-2">
+                                            <span>{item.title} x {item.quantity}</span>
+                                            <div>
+                                                <span className="mr-4">${(item.price * item.quantity).toFixed(2)}</span>
+                                                <button 
+                                                    onClick={() => removeFromCart(item.menuItemId)}
+                                                    className="text-red-500 hover:text-red-700"
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        Total: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
+                                    </div>
+                                    <button 
+                                        onClick={() => navigate('/checkout', { state: { cart } })}
+                                        className="bg-pink700 text-white px-6 py-2 rounded-md hover:bg-pink-800"
+                                    >
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>

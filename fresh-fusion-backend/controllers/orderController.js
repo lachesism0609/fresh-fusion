@@ -2,13 +2,17 @@ const Order = require('../models/Order');
 
 exports.createOrder = async (req, res) => {
     try {
+        const { items, totalPrice, deliveryAddress, contactNumber } = req.body;
+        
         const order = new Order({
-            userId: req.user._id,
-            items: req.body.items,
-            totalPrice: req.body.totalPrice,
-            deliveryAddress: req.body.deliveryAddress,
-            contactNumber: req.body.contactNumber
+            userId: req.userId,
+            items,
+            totalPrice,
+            deliveryAddress,
+            contactNumber,
+            status: 'pending'
         });
+
         const savedOrder = await order.save();
         res.status(201).json(savedOrder);
     } catch (error) {

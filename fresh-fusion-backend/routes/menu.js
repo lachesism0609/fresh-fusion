@@ -121,6 +121,19 @@ router.get('/category/:category', async (req, res) => {
   }
 });
 
+// Add new route to check stock before adding to cart
+router.get('/check-stock/:id', authenticateJWT, async (req, res) => {
+  try {
+    const menuItem = await MenuItem.findById(req.params.id);
+    if (!menuItem) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    res.json({ inStock: menuItem.isInStock() });
+  } catch (error) {
+    res.status(500).json({ error: 'Error checking stock' });
+  }
+});
+
 // Delete the menu (only Admin allowed)
 router.delete('/deleteMenu/:id', authenticateJWT, isAdmin, async (req, res, next) => { 
   try {
