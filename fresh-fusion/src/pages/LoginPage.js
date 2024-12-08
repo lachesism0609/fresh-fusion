@@ -21,7 +21,10 @@ export const LoginPage = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Origin': 'https://ae8278.pages.labranet.jamk.fi'
                 },
+                credentials: 'include',
+                mode: 'cors',
                 body: JSON.stringify(formData),
             });
 

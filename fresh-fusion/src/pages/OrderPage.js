@@ -12,7 +12,11 @@ export const OrderPage = () => {
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`https://fresh-fusion-backend.onrender.com/api/orders/my-orders`, {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Origin': 'https://ae8278.pages.labranet.jamk.fi'
+                    },
+                    withCredentials: true
                 });
                 setOrders(response.data);
                 setError(null);
