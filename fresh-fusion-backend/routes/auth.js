@@ -7,6 +7,31 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { authenticateJWT } = require('../middleware/authMiddleware');
 
+// router.post('/register', async (req, res) => {
+//     const { username, email, password } = req.body;
+
+//     if (!username || !email || !password) {
+//       return res.status(400).json({ error: 'All fields are required' });
+//     }
+    
+//     try {
+//       // Check for duplicate email addresses
+//       const existingUser = await User.findOne({ email });
+//       if (existingUser) {
+//         return res.status(400).json({ error: 'Email already exists' });
+//       }
+    
+//       const user = new User({ username, email, password }); // Use username, email instead of name, email
+//       await user.save();
+//       res.status(201).json({ message: 'User registered successfully' });
+//     } catch (error) {
+//       if (error.code === 11000) {
+//         return res.status(400).json({ error: 'Email already exists' });
+//       }
+//       res.status(500).json({ error: 'Server error', details: error.message });
+//     }
+// });
+
 router.post('/register', async (req, res) => {
   const { name, email, username, password } = req.body;
 
@@ -15,6 +40,17 @@ router.post('/register', async (req, res) => {
     if (!name || !email || !username || !password) {
       return res.status(400).json({ error: 'All fields are required' });
     }
+  
+  
+    const userRole = role && role === 'admin' ? 'admin' : 'user';
+  
+    try {
+    
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: 'Email already exists' });
+      }
+  
 
     // Check existing user
     const existingUser = await User.findOne({ 
@@ -99,5 +135,13 @@ router.get('/profile', authenticateJWT, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+  router.post('/admin-route', authenticateJWT, isAdmin, (req, res) => {
+    res.status(200).send('Admin access granted');
+  });
+
+// Delete user (admin only)
+router.delete('/deleteUser/:id', authenticateJWT, isAdmin, deleteUser);
+
 
 module.exports = router;

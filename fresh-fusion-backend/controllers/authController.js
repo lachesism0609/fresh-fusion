@@ -6,7 +6,9 @@ const config = require('./config');
 
 const port = config.PORT || 5000;
 
-const app = express();
+// const app = express();
+
+const router = express.Router();
 
 app.get('/user/menu', authenticateJWT, async (req, res) => {
   try {
