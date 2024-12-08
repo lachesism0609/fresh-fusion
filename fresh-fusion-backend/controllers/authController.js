@@ -2,13 +2,15 @@ const express = require('express');
 const { authenticateJWT, isAdmin } = require('./middleware/authMiddleware'); // 引入中间件
 const Vehicle = require('./models/Vehicle');
 const User = require('./models/User');
+const config = require('./config');
+
+const port = config.PORT || 5000;
 
 const app = express();
 
-// 普通用户路由，需要身份验证
 app.get('/user/menu', authenticateJWT, async (req, res) => {
   try {
-    const user = await User.findById(req.userId).populate('vehicles'); // 使用 populate 获取车辆数据
+    const user = await User.findById(req.userId).populate('vehicles');
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
@@ -18,7 +20,6 @@ app.get('/user/menu', authenticateJWT, async (req, res) => {
   }
 });
 
-// 仅管理员可访问的路由
 app.delete('/user/:id', authenticateJWT, isAdmin, async (req, res) => {
   const { id } = req.params;
   try {
@@ -26,13 +27,13 @@ app.delete('/user/:id', authenticateJWT, isAdmin, async (req, res) => {
     if (!user) {
       return res.status(404).json({ msg: 'User not found' });
     }
-    await user.remove(); // 删除用户
+    await user.remove();
     res.status(200).json({ msg: 'User deleted' });
   } catch (error) {
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

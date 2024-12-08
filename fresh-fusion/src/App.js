@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
     {
       path: "*",
       element: <ErrorPage />,
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
     }
   ], {
     basename: '/sushi-lover'

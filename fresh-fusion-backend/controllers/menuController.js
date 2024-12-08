@@ -1,4 +1,3 @@
-// Example: Menu Controller (menuController.js)
 const Menu = require('../models/MenuItem');
 
 // GET all menu items
