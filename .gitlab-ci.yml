@@ -3,7 +3,6 @@ image: node:18
 stages:
   - build
   - deploy
-  - mirror
 
 build:
   stage: build
@@ -34,35 +33,3 @@ pages:
       - public
   only:
     - main
-
-mirror_to_github:
-  stage: mirror
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache git openssh-client
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval $(ssh-agent -s)
-    - ssh-add ~/.ssh/id_rsa
-    - echo "Host github.com" > ~/.ssh/config
-    - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-    - git config --global user.name "${GITLAB_USER_NAME}"
-    - git config --global user.email "${GITLAB_USER_EMAIL}"
-  script:
-    - git status
-    - cd fresh-fusion-backend
-    - git init
-    - git add .
-    - git status  # 添加这行来检查文件状态
-    - git commit -m "Update backend [skip ci]"  # 添加 [skip ci] 避免循环触发
-    - git remote add github git@github.com:lachesism0609/fresh-fusion-backend.git
-    - git push -f github main
-  only:
-    - main
-    changes:  # 添加这个部分
-    - fresh-fusion-backend/**/*  # 只在后端文件更改时触发
-  variables:
-    GIT_STRATEGY: clone
-
