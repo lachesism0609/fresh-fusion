@@ -1,35 +1,31 @@
+# The Docker image that will be used to build your app
 image: node:18
-
-stages:
-  - build
-  - deploy
-
-build:
-  stage: build
-  variables:
-    PUBLIC_URL: /sushi-lover
-  script:
-    - cd fresh-fusion
-    - npm install
-    - npm run build
-  tags:
+# Functions that should be executed before the build script is run
+build:                  # Build CRA - Create React App
+  stage: build          # Name the stages involved in the pipeline
+  variables:            # CRA is hosted web server root
+    PUBLIC_URL: /sushi-lover     # Define public url
+  script:               # Run npm's
+    - cd fresh-fusion         # Change to the directory where the CRA is
+    - npm install       # Install all dependencies
+    - npm run build     # Build for production  
+  tags:                 # List of tags that are used to select a runner
     - general
-  artifacts:
-    paths:
+  artifacts:            # List of files and directories to attach to a job on success
+    paths:              # The built files for Gitlab Pages to serve
       - fresh-fusion/build/
-
-pages:
-  stage: deploy
-  dependencies:
+pages:                  # Job name for gitlab to recognise this results in assets for Gitlab Pages
+  stage: deploy         # Name the stages involved in the pipeline
+  dependencies:         # Restrict which artifacts passed to a specific job 
     - build
   script:
-    - rm -rf public
+    - rm -rf public     # CRA and gitlab pages both use the public folder
     - mkdir public
-    - cp -r fresh-fusion/build/* public/
-  tags:
-    - general
-  artifacts:
-    paths:
-      - public
-  only:
+    - cp -r fresh-fusion/build/* public/   # Move build files to public dir for Gitlab Pages  
+  tags:                 # List of tags that are used to select a runner
+    - general  
+  artifacts:            # List of files and directories to attach to a job on success
+    paths:              # The built files for Gitlab Pages to serve      
+      - public   
+  only:                 # SPECIFY YOUR BRACH HERE, usually master or main    
     - main
