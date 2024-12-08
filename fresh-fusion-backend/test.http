@@ -13,4 +13,6 @@ Content-Type: application/json
 }
 
 ### 4. Test Get All Menu - Public Route (no authentication required)
+### tocken = '9a3fad9ca9b6603d0e27b01a67ec1832a4105560fc5a67c0016fa17758fb00c29a96c0a99b5e013f2c7df9ac8f5afcc16e4fb08d685e67c641ef0e5fec564e8d'
 GET http://localhost:5000/api/menu/
+

@@ -1,19 +1,17 @@
-<<<<<<< Updated upstream
-const app = require('./app');
-const config = require('./config');
 
-const port = config.PORT || 5000;
-=======
+const app = require('./app');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const app = require('./app');
+
 const config = require('./utils/config'); // config
 
 const port = process.env.PORT || 5000;
 
 const orderRoutes = require('./routes/orders');
 const menuRoutes = require('./routes/menu');
+const authRoutes = require('./routes/auth');
 
 
 app.use(cors());
@@ -31,7 +29,8 @@ mongoose.connect(config.MONGODB_URI)
 // routes
 app.use('/api/orders', orderRoutes);
 app.use('/api/menu', menuRoutes);
->>>>>>> Stashed changes
+app.use('/auth',authRoutes);
+
 
 // Server Listen
 app.listen(port, () => {
