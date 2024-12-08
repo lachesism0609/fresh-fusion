@@ -2,7 +2,7 @@
   "name": "fresh-fusion-backend",
   "version": "1.0.0",
   "description": "- **Group**: Sushi Lover\r - **Members**: \r   - Jiahui Pan (AE8278)\r   - Tingting Huang (AE8277)",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
