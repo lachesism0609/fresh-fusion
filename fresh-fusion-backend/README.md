@@ -17,65 +17,36 @@ The complete source code is available on GitHub:
 - Access: Public
 
 ## Application Structure
-fresh-fusion-backend/
-
-├── app.js                 # Main application entry point
-
-├── server.js             # Server configuration
-
-├── package.json          # Project dependencies
-
-├── README.md            # Project documentation
-
-├── test.http            # API endpoint tests
-
-│
-
-├── controllers/         # Business logic
-
-│   ├── authController.js  # Authentication logic
-
-│   ├── menuController.js  # Menu management
-
-│   └── orderController.js # Order processing
-
-│
-
-├── middleware/         # Custom middleware
-
-│   └── authMiddleware.js # Authentication middleware
-
-│
-
-├── models/            # Database schemas
-
-│   ├── MenuItem.js    # Menu item model
-
-│   ├── Order.js       # Order model
-
-│   └── User.js        # User model
-
-│
-
-├── routes/           # API routes
-
-│   ├── auth.js       # Authentication routes
-
-│   ├── menu.js       # Menu routes
-
-│   └── orders.js     # Order routes
-
-│
-
-├── seeds/           # Database seeders
-
-│   └── seedMenu.js  # Menu items seeder
-
-│
-
-└── utils/          # Utility functions
-
-    └── config.js   # Configuration settings
+fresh-fusion-backend/  
+├── app.js                 # Main application entry point  
+├── server.js             # Server configuration  
+├── package.json          # Project dependencies  
+├── README.md            # Project documentation  
+├── test.http            # API endpoint tests  
+│  
+├── controllers/         # Business logic  
+│   ├── authController.js  # Authentication logic  
+│   ├── menuController.js  # Menu management 
+│   └── orderController.js # Order processing  
+│  
+├── middleware/         # Custom middleware  
+│   └── authMiddleware.js # Authentication middleware  
+│  
+├── models/            # Database schemas  
+│   ├── MenuItem.js    # Menu item model  
+│   ├── Order.js       # Order model  
+│   └── User.js        # User model  
+│  
+├── routes/           # API routes  
+│   ├── auth.js       # Authentication routes  
+│   ├── menu.js       # Menu routes  
+│   └── orders.js     # Order routes  
+│  
+├── seeds/           # Database seeders  
+│   └── seedMenu.js  # Menu items seeder  
+│  
+└── utils/          # Utility functions  
+    └── config.js   # Configuration settings  
 
 ## Technical Stack
 ### Backend Framework
