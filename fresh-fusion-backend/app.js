@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 const authRoutes = require('./routes/auth');
+const menuRoutes = require('./routes/menu');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.get('/api/test', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);  // Add auth routes
+app.use('/api/menu', menuRoutes); // Add menu routes
 
 // Error handling middleware
 app.use((err, req, res, next) => {

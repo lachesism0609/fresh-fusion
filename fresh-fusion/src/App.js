@@ -6,6 +6,7 @@ import {
 import HomePage from './pages/HomePage';
 import ErrorPage from './pages/ErrorPage';
 import LoginPage from './pages/LoginPage';
+import MenuPage from './pages/MenuPage';
 import './App.css';
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/menu",
+      element: <MenuPage />,
     }
   ], {
     basename: '/sushi-lover'

@@ -1,16 +1,55 @@
-// routes/menu.js
 const express = require('express');
 const router = express.Router();
-const MenuItem = require('../models/MenuItem'); 
+const MenuItem = require('../models/MenuItem');
 const { authenticateJWT, isAdmin } = require('../middleware/authMiddleware');
 
-// Get all menu
+// Get menu items with filters
 router.get('/', async (req, res) => {
   try {
-    const menuItems = await MenuItem.find(); 
-    res.json(menuItems);
+    const { 
+      category, 
+      search, 
+      minPrice, 
+      maxPrice,
+      dietary,
+      page = 1,
+      limit = 10
+    } = req.query;
+
+    let query = {};
+
+    if (category) query.category = category;
+    if (dietary) query.dietaryFlags = { $in: dietary.split(',') };
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
+    }
+
+    const skip = (page - 1) * limit;
+    
+    const [menuItems, total] = await Promise.all([
+      MenuItem.find(query)
+        .skip(skip)
+        .limit(Number(limit))
+        .sort({ popularity: -1 }),
+      MenuItem.countDocuments(query)
+    ]);
+
+    res.json({
+      items: menuItems,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching menu items', error });
+    res.status(500).json({ message: 'Error fetching menu items', error: error.message });
   }
 });
 
@@ -61,6 +100,38 @@ router.put('/updateMenu/:id', authenticateJWT, isAdmin, async (req, res) => {
     res.status(200).json({ message: 'Menu updated successfully', data: menuItem });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Update menu item stock
+router.patch('/stock/:id', authenticateJWT, isAdmin, async (req, res) => {
+  try {
+    const { stock } = req.body;
+    const menuItem = await MenuItem.findByIdAndUpdate(
+      req.params.id,
+      { stock },
+      { new: true }
+    );
+    
+    if (!menuItem) {
+      return res.status(404).json({ error: 'Menu item not found' });
+    }
+
+    res.json(menuItem);
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating stock' });
+  }
+});
+
+// Get menu items by category
+router.get('/category/:category', async (req, res) => {
+  try {
+    const menuItems = await MenuItem.find({ 
+      category: req.params.category 
+    });
+    res.json(menuItems);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching category items' });
   }
 });
 
