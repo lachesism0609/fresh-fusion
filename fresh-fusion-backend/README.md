@@ -26,7 +26,7 @@ fresh-fusion-backend/
 │  
 ├── controllers/         # Business logic  
 │   ├── authController.js  # Authentication logic  
-│   ├── menuController.js  # Menu management 
+│   ├── menuController.js  # Menu management  
 │   └── orderController.js # Order processing  
 │  
 ├── middleware/         # Custom middleware  
