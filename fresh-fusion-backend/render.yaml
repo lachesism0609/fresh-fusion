@@ -2,6 +2,7 @@ services:
   - type: web
     name: fresh-fusion-api
     env: node
+    plan: free
     buildCommand: npm install
     startCommand: node server.js
     envVars:
@@ -11,3 +12,6 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
+      - key: FRONTEND_URL
+        value: "https://ae8278.pages.labranet.jamk.fi/sushi-lover"
+    autoDeploy: true
