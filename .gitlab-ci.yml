@@ -1,32 +1,54 @@
-# The Docker image that will be used to build your app
 image: node:18
-# Functions that should be executed before the build script is run
-build:                  # Build CRA - Create React App
-  stage: build          # Name the stages involved in the pipeline
-  variables:            # CRA is hosted web server root
-    PUBLIC_URL: /sushi-lover     # Define public url
-  script:               # Run npm's
-    - cd fresh-fusion         # Change to the directory where the CRA is
-    - npm install       # Install all dependencies
-    - npm run build     # Build for production  
-  tags:                 # List of tags that are used to select a runner
+
+stages:
+  - build
+  - deploy
+  - mirror
+
+build:
+  stage: build
+  variables:
+    PUBLIC_URL: /sushi-lover
+  script:
+    - cd fresh-fusion
+    - npm install
+    - npm run build
+  tags:
     - general
-  artifacts:            # List of files and directories to attach to a job on success
-    paths:              # The built files for Gitlab Pages to serve
+  artifacts:
+    paths:
       - fresh-fusion/build/
-pages:                  # Job name for gitlab to recognise this results in assets for Gitlab Pages
-  stage: deploy         # Name the stages involved in the pipeline
-  dependencies:         # Restrict which artifacts passed to a specific job 
+
+pages:
+  stage: deploy
+  dependencies:
     - build
   script:
-    - rm -rf public     # CRA and gitlab pages both use the public folder
+    - rm -rf public
     - mkdir public
-    - cp -r fresh-fusion/build/* public/   # Move build files to public dir for Gitlab Pages  
-  tags:                 # List of tags that are used to select a runner
-    - general  
-  artifacts:            # List of files and directories to attach to a job on success
-    paths:              # The built files for Gitlab Pages to serve      
-      - public   
-  only:                 # SPECIFY YOUR BRACH HERE, usually master or main    
+    - cp -r fresh-fusion/build/* public/
+  tags:
+    - general
+  artifacts:
+    paths:
+      - public
+  only:
     - main
+
+mirror_to_github:
+  stage: mirror
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+  script:
+    # Clone the repository
+    - cd fresh-fusion-backend
+    - git remote add github https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${GITHUB_REPO}.git
+    - git push --mirror github
+  only:
+    - main
+  variables:
+    GIT_STRATEGY: clone
 
