@@ -15,8 +15,8 @@ export const MenuPage = () => {
     const fetchMenuItems = useCallback(async () => {
         try {
             const url = selectedCategory === 'all' 
-                ? 'http://localhost:5000/api/menu'
-                : `http://localhost:5000/api/menu/category/${selectedCategory}`;
+                ? 'https://fresh-fusion-backend.onrender.com/api/menu'
+                : `https://fresh-fusion-backend.onrender.com/api/menu/category/${selectedCategory}`;
             const response = await fetch(url);
             const data = await response.json();
             setMenuItems(data.items || data);
@@ -56,8 +56,10 @@ export const MenuPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="bg-white flex flex-row justify-center w-full">
             <Header />
+            
+            {/* Login button and prompt */}
             {!isLoggedIn() && (
                 <div className="fixed top-20 right-4">
                     <button 
@@ -73,107 +75,120 @@ export const MenuPage = () => {
                     Please login first to add items to cart
                 </div>
             )}
-            
-            <main className="container mx-auto px-4 md:px-8 lg:px-16 pt-[80px] pb-8 md:pb-16">
-                <div className="max-w-[390px] md:max-w-[768px] lg:max-w-[1200px] mx-auto">
-                    {/* Menu Title */}
-                    <h1 className="font-josefin text-4xl md:text-5xl lg:text-6xl mb-8 text-center">
-                        <span className="text-pink700">Our </span>
-                        <span className="font-light">Menu</span>
-                    </h1>
 
-                    {/* Categories */}
-                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="bg-white w-[390px] md:w-[768px] lg:w-[1200px] relative">
+                {/* Hero Section */}
+                <div className="w-[343px] h-[476px] mt-[113px] mx-4">
+                    <div className="[font-family:'Jockey_One-Regular',Helvetica] text-xl mb-4">
+                        Home/Menu
+                    </div>
+                    <h1 className="font-josefin text-5xl mb-8">
+                        <span className="font-light">Our </span>
+                        <span className="text-pink700">Food </span>
+                        <span className="font-light">Selection</span>
+                    </h1>
+                    <p className="font-jost font-light text-xl leading-[25px] mb-8">
+                        We take pride in offering food products made with carefully chosen,
+                        high-quality ingredients...
+                    </p>
+                </div>
+
+                {/* Categories */}
+                <div className="mx-4 mb-8">
+                    <div className="font-jost font-bold text-xl mb-4">Show</div>
+                    <div className="flex flex-wrap gap-4">
                         {categories.map((category) => (
                             <button
                                 key={category}
                                 onClick={() => setSelectedCategory(category)}
-                                className={`px-6 py-2 rounded-full font-jost ${
+                                className={`px-6 py-2 rounded-full ${
                                     selectedCategory === category
                                         ? 'bg-pink700 text-white'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-pink100'
+                                        : 'bg-gray-100 text-gray-600'
                                 }`}
                             >
-                                {category.charAt(0).toUpperCase() + category.slice(1)}
+                                {category}
                             </button>
                         ))}
                     </div>
+                </div>
 
-                    {/* Menu Grid */}
-                    {loading ? (
-                        <div className="text-center">Loading...</div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {menuItems.map((item) => (
-                                <div 
-                                    key={item._id} 
-                                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-                                >
-                                    <img
-                                        src={item.imageUrl}
-                                        alt={item.title}
-                                        className="w-full h-48 object-cover"
-                                    />
-                                    <div className="p-4">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <h3 className="font-josefin text-xl">{item.title}</h3>
-                                            <span className="font-jost text-pink700">${item.price}</span>
-                                        </div>
-                                        <p className="font-jost text-gray-600 text-sm mb-3">
-                                            {item.description}
-                                        </p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {item.dietaryFlags?.map((flag) => (
-                                                <span 
-                                                    key={flag}
-                                                    className="text-xs bg-pink100 text-pink700 px-2 py-1 rounded-full"
-                                                >
-                                                    {flag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <button onClick={() => addToCart(item)}>Add to Cart</button>
+                {/* Menu Items Grid */}
+                {loading ? (
+                    <div className="text-center">Loading...</div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+                        {menuItems.map((item) => (
+                            <div 
+                                key={item._id} 
+                                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                            >
+                                <img
+                                    src={item.imageUrl}
+                                    alt={item.title}
+                                    className="w-full h-48 object-cover"
+                                />
+                                <div className="p-4">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <h3 className="font-josefin text-xl">{item.title}</h3>
+                                        <span className="font-jost text-pink700">${item.price}</span>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    {cart.length > 0 && (
-                        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
-                            <div className="container mx-auto">
-                                <h3 className="text-xl mb-2">Shopping Cart ({cart.length} items)</h3>
-                                <div className="max-h-40 overflow-y-auto mb-4">
-                                    {cart.map((item) => (
-                                        <div key={item.menuItemId} className="flex justify-between items-center py-2">
-                                            <span>{item.title} x {item.quantity}</span>
-                                            <div>
-                                                <span className="mr-4">${(item.price * item.quantity).toFixed(2)}</span>
-                                                <button 
-                                                    onClick={() => removeFromCart(item.menuItemId)}
-                                                    className="text-red-500 hover:text-red-700"
-                                                >
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        Total: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
+                                    <p className="font-jost text-gray-600 text-sm mb-3">
+                                        {item.description}
+                                    </p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {item.dietaryFlags?.map((flag) => (
+                                            <span 
+                                                key={flag}
+                                                className="text-xs bg-pink100 text-pink700 px-2 py-1 rounded-full"
+                                            >
+                                                {flag}
+                                            </span>
+                                        ))}
                                     </div>
-                                    <button 
-                                        onClick={() => navigate('/checkout', { state: { cart } })}
-                                        className="bg-pink700 text-white px-6 py-2 rounded-md hover:bg-pink-800"
-                                    >
-                                        Proceed to Checkout
-                                    </button>
+                                    <button onClick={() => addToCart(item)}>Add to Cart</button>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Shopping Cart */}
+                {cart.length > 0 && (
+                    <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
+                        <div className="container mx-auto">
+                            <h3 className="text-xl mb-2">Shopping Cart ({cart.length} items)</h3>
+                            <div className="max-h-40 overflow-y-auto mb-4">
+                                {cart.map((item) => (
+                                    <div key={item.menuItemId} className="flex justify-between items-center py-2">
+                                        <span>{item.title} x {item.quantity}</span>
+                                        <div>
+                                            <span className="mr-4">${(item.price * item.quantity).toFixed(2)}</span>
+                                            <button 
+                                                onClick={() => removeFromCart(item.menuItemId)}
+                                                className="text-red-500 hover:text-red-700"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    Total: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
+                                </div>
+                                <button 
+                                    onClick={() => navigate('/checkout', { state: { cart } })}
+                                    className="bg-pink700 text-white px-6 py-2 rounded-md hover:bg-pink-800"
+                                >
+                                    Proceed to Checkout
+                                </button>
+                            </div>
                         </div>
-                    )}
-                </div>
-            </main>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

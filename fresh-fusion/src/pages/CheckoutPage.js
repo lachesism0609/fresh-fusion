@@ -35,7 +35,7 @@ export const CheckoutPage = () => {
                 contactNumber: formData.contactNumber
             };
 
-            const response = await axios.post('http://localhost:5000/api/orders', orderData, {
+            const response = await axios.post('https://fresh-fusion-backend.onrender.com/api/orders', orderData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             
