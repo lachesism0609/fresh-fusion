@@ -23,8 +23,8 @@ Backend services for Fresh Fusion sushi restaurant web application, providing AP
 
 ### Deployment
 - **Render**
-  - Cloud platform for backend deployment
-  - Automatic deployments from GitHub
+  - Manual deployment using Render Web Services
+  - Direct code upload and build configuration
   - Environment variables management
   - SSL/TLS encryption
 
@@ -90,19 +90,19 @@ Backend services for Fresh Fusion sushi restaurant web application, providing AP
    - Project structure setup
    - Database design
    - API documentation
-   - Render deployment configuration
+   - Initial Render service configuration
 
 2. **Week 2-3: Core Development**
    - API implementation
    - Database integration
    - Authentication system
-   - CI/CD pipeline setup with Render
+   - Manual deployment setup on Render
 
 3. **Week 4: Testing & Documentation**
    - API testing
    - Security testing
    - Documentation completion
-   - Production deployment and monitoring
+   - Final production deployment and monitoring
 
 ## Testing Strategy
 - Unit testing for API endpoints
