@@ -1,5 +1,5 @@
 // Example: Menu Controller (menuController.js)
-const Menu = require('../models/menu');
+const Menu = require('../models/MenuItem');
 
 // GET all menu items
 exports.getMenu = async (req, res) => {

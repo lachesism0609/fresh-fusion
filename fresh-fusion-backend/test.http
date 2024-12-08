@@ -1,0 +1,16 @@
+### 5. Test Create Menu
+POST http://localhost:5000/api/menu/createMenu
+Content-Type: application/json
+
+
+{
+  "name": "California Roll",
+  "category": "Sushi",
+  "price": 12.99,
+  "description": "A popular sushi roll with crab, avocado, and cucumber.",
+  "imageURL": "https://example.com/images/california_roll.jpg",
+  "dietaryFlags": ["gluten-free", "dairy-free"]
+}
+
+### 4. Test Get All Menu - Public Route (no authentication required)
+GET http://localhost:5000/api/menu/

@@ -1,8 +1,42 @@
-const express = require('express')
-const router = express.Router()
+// routes/menu.js
+const express = require('express');
+const router = express.Router();
+const MenuItem = require('../models/MenuItem'); 
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Menu endpoint is working' })
-})
+// Get all menu
+router.get('/', async (req, res) => {
+  try {
+    const menuItems = await MenuItem.find(); 
+    res.json(menuItems);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching menu items', error });
+  }
+});
 
-module.exports = router
+// Post new menu
+router.post('/createMenu', async (req, res) => {
+  try {
+    const { name, category, price, description, imageURL, dietaryFlags } = req.body; 
+
+    
+    const newMenuItem = new MenuItem({
+      name,
+      category,
+      price,
+      description,
+      imageURL,
+      dietaryFlags,
+    });
+
+   
+    const savedMenuItem = await newMenuItem.save();
+
+    res.status(201).json(savedMenuItem); 
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating menu item', error }); // Error handle
+  }
+});
+
+module.exports = router;
+
+

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -29,3 +30,23 @@ app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
 
 module.exports = app;
+=======
+//app.js
+const express = require('express');
+const menu = require('./routes/menu');
+const mongoose = require('mongoose');
+const config = require('./utils/config'); // 导入配置
+
+const app = express();
+
+// middleware
+app.use(express.static('./public'));
+app.use(express.json());
+
+// menu router
+app.use('/api/menu', menu);
+
+// 导出 app
+module.exports = app;
+
+>>>>>>> Stashed changes
