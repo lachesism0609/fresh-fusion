@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const MenuItem = require('../models/MenuItem');
 const { authenticateJWT, isAdmin } = require('../middleware/authMiddleware');
-const menuController = require('../controllers/menuController');
 
 // Get menu items with filters
 router.get('/', async (req, res) => {
@@ -54,11 +53,26 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Post new menu item (admin only)
-router.post('/createMenu', authenticateJWT, isAdmin, menuController.addMenuItem);
+// Post new menu (requires admin authentication)
+router.post('/createMenu', authenticateJWT, isAdmin, async (req, res) => {
+  try {
+    const { title, category, price, description, imageURL, dietaryFlags } = req.body; 
+    
+    const newMenuItem = new MenuItem({
+      title,
+      category,
+      price,
+      description,
+      imageURL,
+      dietaryFlags,
+    });
 
-// Update menu item (admin only)
-router.put('/updateMenu/:id', authenticateJWT, isAdmin, menuController.updateMenuItem);
+    const savedMenuItem = await newMenuItem.save();
+    res.status(201).json(savedMenuItem); 
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating menu item', error });
+  }
+});
 
 // Update the menu (only Admin allowed)
 router.put('/updateMenu/:id', authenticateJWT, isAdmin, async (req, res) => {
@@ -151,6 +165,3 @@ router.delete('/deleteMenu/:id', authenticateJWT, isAdmin, async (req, res, next
 });
 
 module.exports = router;
-
-
-
