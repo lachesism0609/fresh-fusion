@@ -10,6 +10,8 @@ import LoginPage from './pages/LoginPage';
 import MenuPage from './pages/MenuPage';
 import OrderPage from './pages/OrderPage';
 import CheckoutPage from './pages/CheckoutPage';
+import Address from './pages/Address';
+
 import './App.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -46,7 +48,10 @@ function App() {
     {
       path: "*",
       element: <ErrorPage />,
-    }
+    },{
+      path: "/address",
+      element: <Address />,
+    },
   ], {
     basename: '/sushi-lover'
   });
