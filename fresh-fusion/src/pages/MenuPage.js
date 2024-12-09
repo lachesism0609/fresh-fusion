@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../components/Header";
-import { useNavigate } from "react-router-dom";
 import ShoppingCart from "./ShoppingCart"; 
 
 export const MenuPage = () => {
@@ -8,7 +7,6 @@ export const MenuPage = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
-    const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
     const categories = ['all', 'Nigiri', 'Maki', 'Appetizers', 'Special Rolls'];
