@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import ShoppingCart from "./ShoppingCart"; 
 
 export const MenuPage = () => {
     const [menuItems, setMenuItems] = useState([]);
@@ -62,6 +63,7 @@ export const MenuPage = () => {
         return localStorage.getItem('token') !== null;
     };
 
+
     // Modify addToCart function
     const addToCart = (menuItem) => {
         if (!isLoggedIn()) {
@@ -69,12 +71,42 @@ export const MenuPage = () => {
             setTimeout(() => setShowLoginPrompt(false), 3000);
             return;
         }
-        setCart(prev => [...prev, {
-            menuItemId: menuItem._id,
-            quantity: 1,
-            price: menuItem.price,
-            title: menuItem.title
-        }]);
+    
+        setCart(prev => {
+            const existingItemIndex = prev.findIndex(item => item.menuItemId === menuItem._id);
+            
+            // 如果商品已存在，增加数量
+            if (existingItemIndex >= 0) {
+                const updatedCart = [...prev];
+                updatedCart[existingItemIndex].quantity += 1;
+                return updatedCart;
+            }
+    
+            // 否则添加新的商品
+            return [
+                ...prev,
+                {
+                    menuItemId: menuItem._id,
+                    quantity: 1,
+                    price: menuItem.price,
+                    title: menuItem.title,
+                    imageUrl: menuItem.imageUrl // 假设 menuItem 中有 imageUrl 字段
+                }
+            ];
+        });
+    };
+    
+    const updateCartQuantity = (menuItemId, newQuantity) => {
+        if (newQuantity <= 0) return; 
+    
+        setCart(prev => {
+            const updatedCart = [...prev];
+            const itemIndex = updatedCart.findIndex(item => item.menuItemId === menuItemId);
+            if (itemIndex >= 0) {
+                updatedCart[itemIndex].quantity = newQuantity;
+            }
+            return updatedCart;
+        });
     };
 
     const removeFromCart = (itemId) => {
@@ -180,41 +212,9 @@ export const MenuPage = () => {
                             </div>
                         )}
 
+                      
                         {/* Shopping Cart */}
-                        {cart.length > 0 && (
-                            <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
-                                <div className="container mx-auto">
-                                    <h3 className="text-xl mb-2">Shopping Cart ({cart.length} items)</h3>
-                                    <div className="max-h-40 overflow-y-auto mb-4">
-                                        {cart.map((item) => (
-                                            <div key={item.menuItemId} className="flex justify-between items-center py-2">
-                                                <span>{item.title} x {item.quantity}</span>
-                                                <div>
-                                                    <span className="mr-4">${(item.price * item.quantity).toFixed(2)}</span>
-                                                    <button 
-                                                        onClick={() => removeFromCart(item.menuItemId)}
-                                                        className="text-red-500 hover:text-red-700"
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div>
-                                            Total: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}
-                                        </div>
-                                        <button 
-                                            onClick={() => navigate('/checkout', { state: { cart } })}
-                                            className="bg-pink700 text-white px-6 py-2 rounded-md hover:bg-pink-800"
-                                        >
-                                            Proceed to Checkout
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                        <ShoppingCart cart={cart} removeFromCart={removeFromCart} updateCartQuantity={updateCartQuantity} />
                     </div>
                 </div>
             </main>
