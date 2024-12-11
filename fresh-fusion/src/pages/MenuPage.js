@@ -2,6 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
 
+// Move constants outside component
+const CACHE_KEY = 'menuItems';
+const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
 export const MenuPage = () => {
     const [menuItems, setMenuItems] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -9,11 +13,47 @@ export const MenuPage = () => {
     const [cart, setCart] = useState([]);
     const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     const categories = ['all', 'Nigiri', 'Maki', 'Appetizers', 'Special Rolls'];
 
+    // Wrap getCachedMenuItems with useCallback
+    const getCachedMenuItems = useCallback(() => {
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (!cached) return null;
+
+        const { data, timestamp } = JSON.parse(cached);
+        const isExpired = Date.now() - timestamp > CACHE_EXPIRY;
+
+        if (isExpired) {
+            localStorage.removeItem(CACHE_KEY);
+            return null;
+        }
+
+        return data;
+    }, []);
+
+    const setCacheMenuItems = (items) => {
+        const cacheData = {
+            data: items,
+            timestamp: Date.now()
+        };
+        localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+    };
+
     const fetchMenuItems = useCallback(async () => {
         setLoading(true);
+        
+        // First try to get data from cache
+        if (selectedCategory === 'all') {
+            const cachedItems = getCachedMenuItems();
+            if (cachedItems) {
+                setMenuItems(cachedItems);
+                setLoading(false);
+                return;
+            }
+        }
+
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
@@ -48,16 +88,25 @@ export const MenuPage = () => {
             
             setMenuItems(items);
             
+            // Cache only the full menu, not filtered categories
+            if (selectedCategory === 'all') {
+                setCacheMenuItems(items);
+            }
+            
         } catch (error) {
             console.error('Error fetching menu items:', error);
-            if (error.name === 'AbortError') {
-                console.log('Request timed out');
+            // Try to use cached data as fallback if available
+            const cachedItems = getCachedMenuItems();
+            if (cachedItems) {
+                setMenuItems(cachedItems);
+                console.log('Using cached data as fallback');
+            } else {
+                setMenuItems([]); // Set empty array on error
             }
-            setMenuItems([]); // Set empty array on error
         } finally {
             setLoading(false);
         }
-    }, [selectedCategory]);
+    }, [selectedCategory, getCachedMenuItems]); // Add getCachedMenuItems to dependencies
 
     useEffect(() => {
         fetchMenuItems();
@@ -188,9 +237,30 @@ export const MenuPage = () => {
 
                         {/* Shopping Cart */}
                         {cart.length > 0 && (
-                            <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4">
-                                <div className="container mx-auto">
-                                    <h3 className="text-xl mb-2">Shopping Cart ({cart.length} items)</h3>
+                            <div className={`fixed bottom-0 left-0 right-0 bg-white shadow-lg transition-transform duration-300 ease-in-out 
+                                border-t-2 border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] ${
+                                isCartOpen ? 'transform translate-y-0' : 'transform translate-y-[calc(100%-3rem)]'
+                            }`}>
+                                <div 
+                                    className="flex items-center justify-between px-4 py-2 cursor-pointer border-b border-gray-200"
+                                    onClick={() => setIsCartOpen(!isCartOpen)}
+                                >
+                                    <h3 className="text-xl">Shopping Cart ({cart.length} items)</h3>
+                                    <svg 
+                                        className={`w-6 h-6 transition-transform duration-300 ${isCartOpen ? 'rotate-180' : ''}`}
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path 
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round" 
+                                            strokeWidth={2} 
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </div>
+                                <div className="container mx-auto p-4">
                                     <div className="max-h-40 overflow-y-auto mb-4">
                                         {cart.map((item) => (
                                             <div key={item.menuItemId} className="flex justify-between items-center py-2">
