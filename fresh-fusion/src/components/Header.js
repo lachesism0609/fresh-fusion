@@ -21,6 +21,7 @@ export const Header = () => {
     };
 
     return (
+      
         <header className="w-full bg-white shadow-lg relative">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-[113px]">
