@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Get the current path and query string
+        const segment = window.location.pathname + window.location.search;
+        // Redirect to the index page with the path as a parameter
+        window.location.href = '/sushi-lover?' + 
+            'redirect=' + 
+            encodeURIComponent(segment);
+    </script>
+</head>
+</html>

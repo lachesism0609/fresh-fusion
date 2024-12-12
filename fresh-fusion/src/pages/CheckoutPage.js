@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import axios from 'axios';
@@ -13,6 +13,14 @@ export const CheckoutPage = () => {
     });
     const [error, setError] = useState(null);
 
+    // Add token validation on component mount
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login', { state: { from: location.pathname } });
+        }
+    }, [navigate, location]);
+
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
@@ -22,8 +30,36 @@ export const CheckoutPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
+
+        // Validate cart is not empty
+        if (!cart.length) {
+            setError('Your cart is empty. Please add items before checking out.');
+            return;
+        }
+
+        // Validate form data
+        if (!formData.deliveryAddress.trim() || !formData.contactNumber.trim()) {
+            setError('Please fill in all required fields.');
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
+            if (!token) {
+                setError('Your session has expired. Please log in again.');
+                navigate('/login', { state: { from: location.pathname } });
+                return;
+            }
+
+            // Validate token format
+            if (token.split('.').length !== 3) {
+                setError('Invalid authentication token. Please log in again.');
+                localStorage.removeItem('token');
+                navigate('/login', { state: { from: location.pathname } });
+                return;
+            }
+
             const orderData = {
                 items: cart.map(item => ({
                     menuItemId: item.menuItemId,
@@ -31,19 +67,36 @@ export const CheckoutPage = () => {
                     price: item.price
                 })),
                 totalPrice: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                deliveryAddress: formData.deliveryAddress,
-                contactNumber: formData.contactNumber
+                deliveryAddress: formData.deliveryAddress.trim(),
+                contactNumber: formData.contactNumber.trim()
             };
 
-            const response = await axios.post('https://fresh-fusion-backend.onrender.com/api/orders', orderData, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            
-            if (response.status === 201) {
-                navigate('/orders');
+            try {
+                const response = await axios.post('https://fresh-fusion-backend.onrender.com/api/orders', orderData, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.status === 201) {
+                    navigate('/orders');
+                }
+            } catch (axiosError) {
+                if (axiosError.response?.status === 401) {
+                    setError('Your session has expired. Please log in again.');
+                    localStorage.removeItem('token');
+                    navigate('/login', { state: { from: location.pathname } });
+                } else {
+                    throw axiosError; // Re-throw other errors
+                }
             }
         } catch (error) {
-            setError('Failed to place order. Please try again.');
+            const errorMessage = 
+                error.response?.status === 401 ? 'Please log in to continue.' :
+                error.response?.data?.message || 
+                'Failed to place order. Please try again.';
+            setError(errorMessage);
             console.error('Error creating order:', error);
         }
     };
