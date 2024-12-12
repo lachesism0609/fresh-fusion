@@ -51,7 +51,7 @@ const Address = () => {
             <Header />
 
             {/* Intro Section */}
-            <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start my-12 px-4 space-y-8 md:space-y-0 md:space-x-8">
+            <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start my-12 px-4 space-y-8 md:space-y-0 md:space-x-8 justify-between">
             {/* Text and Selector Section */}
             <div className="md:w-1/2 flex flex-col space-y-6">
                 {/* Text Section */}
@@ -95,11 +95,11 @@ const Address = () => {
     </div>
 
     {/* Image Section */}
-    <div className="md:m-1/2">
+    <div className="md:m-1/2 flex justify-center">
         <img
             src={DiningRoom}
             alt="Sushi Buffet Restaurant"
-            className="shadow-lg w-3/4 max-w-md object-cover hidden md:block"
+            className="shadow-lg max-w-[378px] object-cover hidden md:block"
             style={{
                 borderRadius: "20px 110px", // Round corner
                 objectFit: "cover"
