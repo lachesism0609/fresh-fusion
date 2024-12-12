@@ -1,8 +1,8 @@
 // pages/Address.js
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "../components/Header";
 import AddressCard from "../components/AddressCard";
-import homeSushiImage from "../assets/homeSushi.jpg";
+import DiningRoom from "../assets/dining-table.jpg";
 
 
 const introText = {
@@ -30,53 +30,109 @@ const Address = () => {
         return acc;
     }, {});
 
+
+    const [selectedCity, setSelectedCity] = useState("");
+
+    const handleChange = (e) => {
+
+        const cityKey = e.target.value;
+
+        if (cityKey === "ALL") {
+            setSelectedCity("");
+         
+            return;
+        }
+
+        setSelectedCity(cityKey ); // Update selected city
+    };
+
     return (
         <div>
             <Header />
 
             {/* Intro Section */}
-            <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start my-12 px-4 space-y-8 md:space-y-0 md:space-x-8 ">
+            <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start my-12 px-4 space-y-8 md:space-y-0 md:space-x-8">
+            {/* Text and Selector Section */}
+            <div className="md:w-1/2 flex flex-col space-y-6">
                 {/* Text Section */}
-                <div className="md:w-1/2 ">
-                    <h2 className="text-5xl font-bold mb-4 font-josefin text-4xl md:text-6xl lg:text-6xl mb-6 ">
-                    <span className="font-light">Find </span>
-                    <span className="text-pink700">Your </span>
-                    <span className="font-light">Nearest </span>
-                    <span className="text-pink600">Sushi</span>     
-                    <span className= "font-light"> Delights</span>
-                    <span className="text-pink600">!</span> 
-                    </h2>
-                    <p className="text-gray-900  text-1xl  lg:text-2xl ">{introText.body}</p>
+                <div>
+            <h2 className="text-5xl font-bold mb-4 font-josefin text-4xl md:text-6xl lg:text-6xl mb-6">
+                <span className="font-light">Find </span>
+                <span className="text-pink700">Your </span>
+                <span className="font-light">Nearest </span>
+                <span className="text-pink600">Sushi</span>     
+                <span className="font-light"> Delights</span>
+                <span className="text-pink600">!</span> 
+            </h2>
+            <p className="text-gray-900 text-1xl lg:text-2xl">{introText.body}</p>
 
-                    <p className="font-bold mt-6 text-pink700">Holiday Hours Notice:</p>
-                    <p className="text-gray-800 text-sm lg:text-1xl">{introText.notice}</p>
-                </div>
+            <p className="font-bold mt-6 text-pink700">Holiday Hours Notice:</p>
+            <p className="text-gray-800 text-sm lg:text-1xl">{introText.notice}</p>
+        </div>
 
-                {/* Image Section */}
-                <div className="md:w-1/2">
-                    <img
-                        src={homeSushiImage}
-                        alt="Sushi Buffet Restaurant"
-                        className="rounded-lg shadow-lg w-full object-cover hidden md:block"
-                    />
-                </div>
-            </div>
+        {/* City Selector */}
+        <div className="w-full">
+            <label htmlFor="city-selector" className="block text-lg font-bold text-gray-700 mb-2">
+                Select City:
+            </label>
+            <select
+                id="city-selector"
+                className="block w-full border-2 border-gray-300 rounded-full p-2"
+                value={selectedCity}
+                onChange={handleChange}
+            >
+                <option value="" disabled>
+                    Choose a city
+                </option>
+                <option value="ALL">All</option>
+                {Object.keys(groupedAddresses).map((cityKey) => (
+                    <option key={cityKey} value={cityKey}>
+                        {cityKey}
+                    </option>
+                ))}
+            </select>
+        </div>
+    </div>
+
+    {/* Image Section */}
+    <div className="md:m-1/2">
+        <img
+            src={DiningRoom}
+            alt="Sushi Buffet Restaurant"
+            className="shadow-lg w-3/4 max-w-md object-cover hidden md:block"
+            style={{
+                borderRadius: "20px 110px", // Round corner
+                objectFit: "cover"
+            }}
+        />
+        </div>
+    </div>
 
             {/* Address Section */}
             <div className="w-full max-w-5xl mx-auto my-12 px-4">
-                {/* <h1 className="text-4xl font-bold text-center text-pink700 mb-10">Our Locations</h1> */}
-                <div className="space-y-12">
-                    {Object.keys(groupedAddresses).map((city) => (
-                        <div key={city}>
-                            <h2 className="text-3xl font-semibold text-gray-800 mb-6">{city}</h2>
-                            <div className="space-y-6">
-                                {groupedAddresses[city].map((address) => (
-                                    <AddressCard key={address.id} {...address} />
-                                ))}
-                            </div>
+                {selectedCity ? (
+                    <div>
+                        <h2 className="text-3xl font-semibold text-gray-800 mb-6">{selectedCity}</h2>
+                        <div className="space-y-6">
+                            {groupedAddresses[selectedCity].map((address) => (
+                                <AddressCard key={address.id} {...address} />
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ) : (
+                    <div className="space-y-12">
+                        {Object.keys(groupedAddresses).map((city) => (
+                            <div key={city}>
+                                <h2 className="text-3xl font-semibold text-gray-800 mb-6">{city}</h2>
+                                <div className="space-y-6">
+                                    {groupedAddresses[city].map((address) => (
+                                        <AddressCard key={address.id} {...address} />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -11,8 +11,7 @@ const AddressCard = ({ city, street, zip }) => {
             className={`${baseStyles} ${hoverStyles} ${activeStyles} ${transitionStyles} ${pointerStyles } w-full`}
             aria-label={`Location details for ${city}`}
         >
-            <h2 className="text-2xl font-semibold">{city}</h2>
-            <p className="mt-2">{street}</p>
+            <h2 className="text-1xl font-semibold">{street}</h2>
             <p className="text-gray-600">{zip}</p>
         </article>
     );
