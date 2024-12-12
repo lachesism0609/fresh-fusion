@@ -99,7 +99,7 @@ const Address = () => {
         <img
             src={DiningRoom}
             alt="Sushi Buffet Restaurant"
-            className="shadow-lg max-w-[378px] object-cover hidden md:block"
+            className="shadow-lg max-w-[320px] lg:max-w-[378px] object-cover hidden md:block"
             style={{
                 borderRadius: "20px 110px", // Round corner
                 objectFit: "cover"
