@@ -5,24 +5,46 @@
 - Page Link: https://ae8278.pages.labranet.jamk.fi/sushi-lover
 
 ## Project Overview
-An interactive web application for Fresh Fusion, an all-you-can-eat sushi restaurant, featuring modern design and seamless user experience.
+An interactive web application for Fresh Fusion, offering a comprehensive online platform for browsing menu items, placing orders, and managing user accounts. Features modern design, responsive layout, and seamless user experience.
+
+## Features
+- User authentication (login/register)
+- Interactive menu with category filtering
+- Shopping cart functionality
+- Secure checkout process
+- Order history tracking
+- Multiple restaurant locations
+- Responsive design for all devices
 
 ## Pages
 1. **Homepage**
-   - Hero section with restaurant highlights
-   - Featured dishes carousel
+   - Modern hero section with call-to-action
+   - Clean, minimalist design
+   - Easy navigation to menu and locations
 
 2. **Menu**
-   - Categories: Sushi, Sashimi, Rolls, Hot Dishes
-   - Interactive menu with images
-   - Dietary information (vegetarian, gluten-free)
-   - Price display for lunch/dinner buffet
-   - Popular items highlights
+   - Dynamic category filtering
+   - Interactive shopping cart
+   - Real-time price updates
+   - Detailed item descriptions
+   - Visual indicators for dietary preferences
 
-3. **Address & Contact**
-   - Restaurant location with embedded map
-   - Opening hours
-   - Contact information
+3. **Address & Locations**
+   - City-based location filtering
+   - Detailed restaurant information
+   - Operating hours
+   - Holiday notices
+
+4. **Order Management**
+   - Secure checkout process
+   - Order history
+   - Order status tracking
+   - Delivery information
+
+5. **User Account**
+   - Login/Register functionality
+   - Order history access
+   - Profile management
 
 ## Technologies
 - **Frontend Framework**: React.js
@@ -38,7 +60,6 @@ An interactive web application for Fresh Fusion, an all-you-can-eat sushi restau
   - React Router for navigation
   - Framer Motion for animations
   - React Icons for UI icons
-  - Leaflet.js for maps
 
 ## Design Approach
 - Modern minimalist aesthetic
