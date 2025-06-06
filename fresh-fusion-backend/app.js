@@ -42,9 +42,9 @@ app.get('/api/test', (req, res) => {
 });
 
 // Routes
-app.use('/api/auth', authRoutes);  // Add auth routes
-app.use('/api/menu', menuRoutes); // Add menu routes
-app.use('/api/orders', orderRoutes); // Add order routes
+app.use('/api/auth', authRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
