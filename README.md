@@ -1,83 +1,74 @@
-# Final Assignment - Fresh Fusion Sushi Restaurant
-- Group name: Sushi Lover
-- Group members: Jiahui Pan(AE8278), Tingting Huang (AE8277)
-- Prototype link: https://www.figma.com/design/BOhTVI8MOR0ihdPJvjptcG/Fresh-Fusion?m=auto&t=J2rrQVKeyjsK1Yac-1
-- Page Link: https://ae8278.pages.labranet.jamk.fi/sushi-lover
+# Fresh Fusion - Full Stack Sushi Restaurant Application
 
 ## Project Overview
-An interactive web application for Fresh Fusion, offering a comprehensive online platform for browsing menu items, placing orders, and managing user accounts. Features modern design, responsive layout, and seamless user experience.
+Fresh Fusion is a comprehensive full-stack web application for a sushi restaurant, featuring a responsive React frontend and robust Node.js backend. The platform enables customers to browse menu items, place orders with real-time stock verification, create accounts, and track order history. The admin interface allows restaurant staff to manage inventory, update menu items, and process orders.
 
-## Features
-- User authentication (login/register)
-- Interactive menu with category filtering
-- Shopping cart functionality
-- Secure checkout process
-- Order history tracking
-- Multiple restaurant locations
-- Responsive design for all devices
+## Project Repository
+- **Source Code**: [https://gitlab.labranet.jamk.fi/AE8278/sushi-lover/-/tree/main](https://gitlab.labranet.jamk.fi/AE8278/sushi-lover/-/tree/main)
 
-## Pages
-1. **Homepage**
-   - Modern hero section with call-to-action
-   - Clean, minimalist design
-   - Easy navigation to menu and locations
+## Key Technologies
 
-2. **Menu**
-   - Dynamic category filtering
-   - Interactive shopping cart
-   - Real-time price updates
-   - Detailed item descriptions
-   - Visual indicators for dietary preferences
+### Frontend Technologies
+- **React.js**: Built component-based UI with hooks for state management
+- **Tailwind CSS**: Implemented responsive design using utility-first approach
+- **React Router**: Created seamless navigation between application pages
+- **Framer Motion**: Added smooth animations for enhanced user experience
+- **JWT Authentication**: Implemented secure user sessions with token-based auth
 
-3. **Address & Locations**
-   - City-based location filtering
-   - Detailed restaurant information
-   - Operating hours
-   - Holiday notices
+### Backend Technologies
+- **Node.js & Express**: Developed RESTful API architecture following MVC pattern
+- **MongoDB Atlas**: Designed document-based schemas for menu items, users, and orders
+- **Mongoose**: Created data models with validation and relationship management
+- **JWT & Bcrypt**: Implemented secure authentication with password hashing
+- **Express Validator**: Added request validation for enhanced security
+- **Render**: Deployed backend with production-grade configurations
 
-4. **Order Management**
-   - Secure checkout process
-   - Order history
-   - Order status tracking
-   - Delivery information
+## Architecture
+- **Microservices Pattern**: Separate frontend and backend services for scalability
+- **RESTful API Design**: Well-documented endpoints with appropriate HTTP methods
+- **Database Schema Optimization**: Efficient document relationships for MongoDB
+- **JWT Authentication Flow**: Secure token generation, validation, and refresh
+- **Role-Based Access Control**: Different permission levels for users and admins
 
-5. **User Account**
-   - Login/Register functionality
-   - Order history access
-   - Profile management
+## My Contributions (Jiahui Pan)
 
-## Technologies
-- **Frontend Framework**: React.js
-- **CSS Framework**: Tailwind CSS
-  - Chosen for its utility-first approach
-  - Excellent responsive design capabilities
-  - Modern component styling
-- **Design Tool**: Figma
-  - Prototyping and UI/UX design
-  - Component library
-  - Design system management
-- **Additional Libraries**:
-  - React Router for navigation
-  - Framer Motion for animations
-  - React Icons for UI icons
+### Backend Development
+- Designed and implemented the order management system with inventory tracking
+- Created database schemas and relationships for efficient data storage
+- Developed secure JWT authentication with proper error handling
+- Implemented role-based middleware for protecting admin routes
 
-## Design Approach
-- Modern minimalist aesthetic
-- Japanese-inspired color palette
-- Mobile-first responsive design
-- Focus on visual hierarchy
-- Emphasis on food photography
+### DevOps & Deployment
+- Set up continuous deployment pipeline on Render platform
+- Configured environment variables for secure credential management
+- Implemented SSL/TLS for secure API communications
+- Established proper error logging and monitoring
 
-## Timeline
-1. Week 1: Design Phase
-   - Wireframing
-   - Prototype creation
-   - Design system setup
-2. Week 2-3: Development
-   - Component development
-   - Page implementation
-   - Responsive testing
-3. Week 4: Testing & Deployment
-   - Cross-browser testing
-   - Performance optimization
-   - Launch preparation
+### Testing & Quality Assurance
+- Created comprehensive API tests using Jest
+- Designed integration tests for database operations
+- Implemented security testing for authentication flows
+- Developed load testing scripts to verify system performance
+
+### Documentation
+- Produced detailed API documentation with example requests/responses
+- Created comprehensive README with project structure and setup instructions
+- Documented database schema design and relationships
+- Maintained code comments and documentation throughout development
+
+## Project Achievements
+- Successfully deployed a production-ready full-stack application
+- Implemented secure authentication and authorization system
+- Created efficient database operations with proper indexing
+- Developed responsive frontend design that works across all devices
+- Built a complete order processing system with inventory management
+
+## Skills Demonstrated
+- Full-stack JavaScript/TypeScript development
+- RESTful API design and implementation
+- Database modeling and optimization
+- Authentication and security best practices
+- Deployment and DevOps workflows
+- Test-driven development approaches
+- Technical documentation
+- Collaborative development using Git
