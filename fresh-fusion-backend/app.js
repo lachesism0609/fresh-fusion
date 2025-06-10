@@ -9,10 +9,11 @@ const orderRoutes = require('./routes/orders');
 
 const app = express();
 
-// Update CORS configuration
 app.use(cors({
-  origin: ['https://ae8278.pages.labranet.jamk.fi', 'http://localhost:3000'],
-  credentials: true,
+  origin: [
+    'https://lachesism0609.github.io',
+    'http://localhost:3000',
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
