@@ -97,7 +97,7 @@ Feel free to fork this project and make improvements. If you want to contribute,
 
 ## 📫 **Contact**
 - [GitHub](https://github.com/lachesism0609)
-- [LinkedIn](www.linkedin.com/in/lenap469)
+- [LinkedIn](https://www.linkedin.com/in/lenap469/)
 
 ---
 
