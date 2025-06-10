@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
   Navigate
 } from "react-router-dom";
@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <HomePage />,
@@ -52,9 +52,7 @@ function App() {
       path: "/address",
       element: <Address />,
     },
-  ], {
-    basename: '/sushi-lover'
-  });
+  ]);
 
   return (
     <React.StrictMode>

@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <title>Fresh Fusion - Page Not Found</title>
     <script>
-        // Get the current path and query string
-        const segment = window.location.pathname + window.location.search;
-        // Redirect to the index page with the path as a parameter
-        window.location.href = '/sushi-lover?' + 
-            'redirect=' + 
-            encodeURIComponent(segment);
+        // Single Page Apps for GitHub Pages
+        // https://github.com/rafgraph/spa-github-pages
+        var segmentCount = 1; // Adjust depending on your repo name, for "username.github.io/repo-name" use 1
+        
+        var location = window.location;
+        var repo = '/sushi-lover';
+        var l = location.pathname.replace(repo, '');
+        var redirectUrl = location.protocol + '//' + location.hostname + 
+            (location.port ? ':' + location.port : '') + repo + '/#' + l;
+            
+        console.log('Redirecting from 404 to: ' + redirectUrl);
+        window.location.replace(redirectUrl);
     </script>
 </head>
+<body>
+    <h1>Page Not Found</h1>
+    <p>Redirecting to homepage...</p>
+</body>
 </html>
