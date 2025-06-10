@@ -48,6 +48,10 @@ jobs:
         env:
           PUBLIC_URL: /fresh-fusion
           
+      - name: Create .nojekyll file
+        run: |
+          touch fresh-fusion/build/.nojekyll
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
