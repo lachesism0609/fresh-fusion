@@ -73,13 +73,13 @@ Now, you can open your browser and view the website at http://localhost:3000.
 
 ---
 
-🌍 Live Demo
+## 🌍 **Live Demo**
 You can view the live version of the project here:
 [Live Demo - Fresh Fusion](https://lachesism0609.github.io/fresh-fusion)
 
 ---
 
-📂 Original Project Repository
+## 📂 **Original Project Repository**
 This project was originally created for a university course and can be accessed on the following GitLab repository:
 [Original Project - Sushi Lover](https://gitlab.labranet.jamk.fi/AE8278/sushi-lover)
 
