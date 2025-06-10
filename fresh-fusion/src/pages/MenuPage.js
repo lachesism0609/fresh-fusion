@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Header } from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import { getMenu, getMenuByCategory } from "../services/api";
 
 // Move constants outside component
 const CACHE_KEY = 'menuItems';
@@ -55,32 +56,10 @@ export const MenuPage = () => {
         }
 
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-            const url = selectedCategory === 'all' 
-                ? 'https://fresh-fusion-backend.onrender.com/api/menu'
-                : `https://fresh-fusion-backend.onrender.com/api/menu/category/${selectedCategory}`;
-
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Origin': 'https://ae8278.pages.labranet.jamk.fi'
-                },
-                mode: 'cors',
-                credentials: 'include',
-                signal: controller.signal
-            });
-
-            clearTimeout(timeoutId);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
+            const data = selectedCategory === 'all' 
+                ? await getMenu()
+                : await getMenuByCategory(selectedCategory);
+            
             // Ensure we're setting an array
             const items = Array.isArray(data) ? data : 
                          Array.isArray(data.items) ? data.items :
