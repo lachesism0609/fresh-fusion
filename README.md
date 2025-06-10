@@ -68,12 +68,25 @@ Now, you can open your browser and view the website at http://localhost:3000.
 ---
 
 ## 📸 **Screenshots**
-(Here you can add a few screenshots of the app interface)
+![Fresh Fusion Homepage](./screenshots/homepage.jpg)
+![Fresh Fusion Menupage](./screenshots/menupage.png)
+
+---
+
+🌍 Live Demo
+You can view the live version of the project here:
+[Live Demo - Fresh Fusion](https://lachesism0609.github.io/fresh-fusion)
+
+---
+
+📂 Original Project Repository
+This project was originally created for a university course and can be accessed on the following GitLab repository:
+[Original Project - Sushi Lover](https://gitlab.labranet.jamk.fi/AE8278/sushi-lover)
 
 ---
 
 ## 📝 **License**
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ---
 
@@ -83,13 +96,13 @@ Feel free to fork this project and make improvements. If you want to contribute,
 ---
 
 ## 📫 **Contact**
-- GitHub
-- LinkedIn
+- [GitHub](https://github.com/lachesism0609)
+- [LinkedIn](www.linkedin.com/in/lenap469)
 
 ---
 
 ## 💡 **Next Steps / Future Improvements**
 - Add more test coverage for backend API.
-- Implement a payment system for real-time order processing.
 - Enhance authentication with OAuth (e.g., Google or Facebook login).
 - Add more animations and interactions for a richer user experience.
+- Optimize website performance through code splitting, lazy loading components, and image optimization.
