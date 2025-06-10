@@ -46,7 +46,7 @@ jobs:
           cd fresh-fusion
           CI=false npm run build
         env:
-          PUBLIC_URL: /sushi-lover
+          PUBLIC_URL: /fresh-fusion
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
