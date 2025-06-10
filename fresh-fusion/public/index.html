@@ -22,6 +22,17 @@
             }
         })();
     </script>
+    <script>
+      // Debug information for troubleshooting
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('CORS')) {
+          console.error('CORS Error detected:', e);
+          // Log additional debugging info
+          console.log('Current URL:', window.location.href);
+          console.log('Hostname:', window.location.hostname);
+        }
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

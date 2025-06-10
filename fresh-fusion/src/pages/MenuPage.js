@@ -7,6 +7,37 @@ import { getMenu, getMenuByCategory } from "../services/api";
 const CACHE_KEY = 'menuItems';
 const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
+// Add this constant at the top of your file (outside the component)
+const DEMO_MENU_ITEMS = [
+  {
+    _id: 'demo1',
+    title: 'California Roll',
+    description: 'Crab, avocado, and cucumber wrapped in seaweed and rice',
+    price: 8.99,
+    category: 'Maki',
+    imageUrl: 'https://placehold.co/600x400/e7d6e1/ffffff?text=California+Roll',
+    dietaryFlags: ['Pescatarian']
+  },
+  {
+    _id: 'demo2',
+    title: 'Salmon Nigiri',
+    description: 'Fresh salmon on a bed of seasoned rice',
+    price: 5.99,
+    category: 'Nigiri',
+    imageUrl: 'https://placehold.co/600x400/e7d6e1/ffffff?text=Salmon+Nigiri',
+    dietaryFlags: ['Gluten-Free', 'Pescatarian']
+  },
+  {
+    _id: 'demo3',
+    title: 'Vegetable Tempura',
+    description: 'Assorted vegetables fried in a light, crispy batter',
+    price: 7.99,
+    category: 'Appetizers',
+    imageUrl: 'https://placehold.co/600x400/e7d6e1/ffffff?text=Vegetable+Tempura',
+    dietaryFlags: ['Vegetarian']
+  }
+];
+
 export const MenuPage = () => {
     const [menuItems, setMenuItems] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -15,6 +46,7 @@ export const MenuPage = () => {
     const navigate = useNavigate();
     const [showLoginPrompt, setShowLoginPrompt] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [error, setError] = useState(null);
 
     const categories = ['all', 'Nigiri', 'Maki', 'Appetizers', 'Special Rolls'];
 
@@ -44,6 +76,7 @@ export const MenuPage = () => {
 
     const fetchMenuItems = useCallback(async () => {
         setLoading(true);
+        setError(null);
         
         // First try to get data from cache
         if (selectedCategory === 'all') {
@@ -74,18 +107,21 @@ export const MenuPage = () => {
             
         } catch (error) {
             console.error('Error fetching menu items:', error);
+            setError(`Failed to load menu: ${error.message}`);
+            
             // Try to use cached data as fallback if available
             const cachedItems = getCachedMenuItems();
             if (cachedItems) {
                 setMenuItems(cachedItems);
                 console.log('Using cached data as fallback');
             } else {
-                setMenuItems([]); // Set empty array on error
+                // If no cache available, show demo data
+                setMenuItems(DEMO_MENU_ITEMS);
             }
         } finally {
             setLoading(false);
         }
-    }, [selectedCategory, getCachedMenuItems]); // Add getCachedMenuItems to dependencies
+    }, [selectedCategory, getCachedMenuItems]);
 
     useEffect(() => {
         fetchMenuItems();
@@ -166,6 +202,16 @@ export const MenuPage = () => {
                             <div className="text-center w-full py-8">
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink700 mx-auto mb-4"></div>
                                 <p className="text-gray-600">Loading menu items...</p>
+                            </div>
+                        ) : error ? (
+                            <div className="text-center w-full py-8">
+                                <p className="text-red-500">{error}</p>
+                                <button 
+                                    onClick={fetchMenuItems}
+                                    className="mt-4 px-6 py-2 bg-pink700 text-white rounded-md hover:bg-pink-800"
+                                >
+                                    Retry
+                                </button>
                             </div>
                         ) : menuItems.length === 0 ? (
                             <div className="text-center w-full py-8">
