@@ -4,18 +4,24 @@
     <meta charset="utf-8">
     <title>Fresh Fusion - Page Not Found</title>
     <script>
-        // Single Page Apps for GitHub Pages
-        // https://github.com/rafgraph/spa-github-pages
-        var segmentCount = 1; // Adjust depending on your repo name, for "username.github.io/repo-name" use 1
-        
-        var location = window.location;
-        var repo = '/fresh-fusion';
-        var l = location.pathname.replace(repo, '');
-        var redirectUrl = location.protocol + '//' + location.hostname + 
-            (location.port ? ':' + location.port : '') + repo + '/#' + l;
+        // GitHub Pages SPA redirect for BrowserRouter
+        (function() {
+            // Get current location and extract pathname
+            var pathSegments = window.location.pathname.split('/');
+            var repoName = 'fresh-fusion';
+            var hasRepoSegment = pathSegments.indexOf(repoName) !== -1;
             
-        console.log('Redirecting from 404 to: ' + redirectUrl);
-        window.location.replace(redirectUrl);
+            // If we're on GitHub Pages and have a path beyond the repo name
+            if (window.location.hostname.includes('github.io') && hasRepoSegment) {
+                // Create redirect URL
+                var redirectPath = pathSegments.slice(pathSegments.indexOf(repoName) + 1).join('/');
+                var redirectUrl = window.location.origin + '/' + repoName + '/?path=' + 
+                    encodeURIComponent('/' + redirectPath);
+                
+                // Redirect to the main page with the path as a query parameter
+                window.location.replace(redirectUrl);
+            }
+        })();
     </script>
 </head>
 <body>

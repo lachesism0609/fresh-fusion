@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  createHashRouter,
+  createBrowserRouter,
   RouterProvider,
   Navigate
 } from "react-router-dom";
@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  const router = createHashRouter([
+  const router = createBrowserRouter([
     {
       path: "/",
       element: <HomePage />,
@@ -52,7 +52,9 @@ function App() {
       path: "/address",
       element: <Address />,
     },
-  ]);
+  ], {
+    basename: '/fresh-fusion'  // Add basename for GitHub Pages
+  });
 
   return (
     <React.StrictMode>

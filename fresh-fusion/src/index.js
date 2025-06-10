@@ -4,6 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Handle redirect from 404.html for GitHub Pages SPA with BrowserRouter
+(function() {
+  const redirectPath = new URLSearchParams(window.location.search).get('path');
+  if (redirectPath && window.history.replaceState) {
+    window.history.replaceState(null, null, redirectPath);
+  }
+})();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

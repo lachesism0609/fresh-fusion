@@ -1,74 +1,95 @@
-# Fresh Fusion - Full Stack Sushi Restaurant Application
+# Fresh Fusion - Full-stack Sushi Restaurant Website
 
-## Project Overview
-Fresh Fusion is a comprehensive full-stack web application for a sushi restaurant, featuring a responsive React frontend and robust Node.js backend. The platform enables customers to browse menu items, place orders with real-time stock verification, create accounts, and track order history. The admin interface allows restaurant staff to manage inventory, update menu items, and process orders.
+**Fresh Fusion** is a full-stack sushi restaurant website designed to provide an intuitive and seamless experience for users to browse the menu, place orders, and interact with the restaurant system. The project includes both frontend and backend components, implemented using modern web technologies.  
 
-## Project Repository
-- **Source Code**: [https://gitlab.labranet.jamk.fi/AE8278/sushi-lover/-/tree/main](https://gitlab.labranet.jamk.fi/AE8278/sushi-lover/-/tree/main)
+---
 
-## Key Technologies
+## 🚀 **Features**
 
-### Frontend Technologies
-- **React.js**: Built component-based UI with hooks for state management
-- **Tailwind CSS**: Implemented responsive design using utility-first approach
-- **React Router**: Created seamless navigation between application pages
-- **Framer Motion**: Added smooth animations for enhanced user experience
-- **JWT Authentication**: Implemented secure user sessions with token-based auth
+- **Responsive Design**: Mobile-first approach, ensuring a great user experience across all devices.
+- **Menu Browsing**: Users can browse different sushi items, view details, and place orders.
+- **Order Management**: Real-time order management with the backend system.
+- **Authentication**: User login system for order history and profile management.
+- **Smooth Animations**: Engaging UI animations using Framer Motion.
+  
+---
 
-### Backend Technologies
-- **Node.js & Express**: Developed RESTful API architecture following MVC pattern
-- **MongoDB Atlas**: Designed document-based schemas for menu items, users, and orders
-- **Mongoose**: Created data models with validation and relationship management
-- **JWT & Bcrypt**: Implemented secure authentication with password hashing
-- **Express Validator**: Added request validation for enhanced security
-- **Render**: Deployed backend with production-grade configurations
+## 🧑‍💻 **Technology Stack**
 
-## Architecture
-- **Microservices Pattern**: Separate frontend and backend services for scalability
-- **RESTful API Design**: Well-documented endpoints with appropriate HTTP methods
-- **Database Schema Optimization**: Efficient document relationships for MongoDB
-- **JWT Authentication Flow**: Secure token generation, validation, and refresh
-- **Role-Based Access Control**: Different permission levels for users and admins
+- **Frontend**: React.js, Tailwind CSS, React Router, Framer Motion, React Icons  
+- **Backend**: Node.js, Express.js, RESTful API  
+- **Database**: MongoDB Atlas (for storing menu items, user profiles, and order data)  
+- **Deployment**: Render (manual deployment and environment variable management)
 
-## My Contributions (Jiahui Pan)
+---
 
-### Backend Development
-- Designed and implemented the order management system with inventory tracking
-- Created database schemas and relationships for efficient data storage
-- Developed secure JWT authentication with proper error handling
-- Implemented role-based middleware for protecting admin routes
+## 🔧 **Getting Started**
 
-### DevOps & Deployment
-- Set up continuous deployment pipeline on Render platform
-- Configured environment variables for secure credential management
-- Implemented SSL/TLS for secure API communications
-- Established proper error logging and monitoring
+To run this project locally, follow these steps:
 
-### Testing & Quality Assurance
-- Created comprehensive API tests using Jest
-- Designed integration tests for database operations
-- Implemented security testing for authentication flows
-- Developed load testing scripts to verify system performance
+### 1. **Clone the repository**
 
-### Documentation
-- Produced detailed API documentation with example requests/responses
-- Created comprehensive README with project structure and setup instructions
-- Documented database schema design and relationships
-- Maintained code comments and documentation throughout development
+```bash
+git clone https://github.com/lachesism0609/fresh-fusion.git
+```
 
-## Project Achievements
-- Successfully deployed a production-ready full-stack application
-- Implemented secure authentication and authorization system
-- Created efficient database operations with proper indexing
-- Developed responsive frontend design that works across all devices
-- Built a complete order processing system with inventory management
+### 2. **Install dependencies**
 
-## Skills Demonstrated
-- Full-stack JavaScript/TypeScript development
-- RESTful API design and implementation
-- Database modeling and optimization
-- Authentication and security best practices
-- Deployment and DevOps workflows
-- Test-driven development approaches
-- Technical documentation
-- Collaborative development using Git
+Navigate to both the frontend and backend directories and install the dependencies:
+
+For the frontend:
+```bash
+cd fresh-fusion
+npm install
+```
+
+For the backend:
+```bash
+cd fresh-fusion-backend
+npm install
+```
+
+### 3. **Run the project**
+
+Frontend:
+Navigate to the frontend folder and run:
+```bash
+npm start
+```
+
+Backend:
+Navigate to the backend folder and run:
+```bash
+npm start
+```
+
+Now, you can open your browser and view the website at http://localhost:3000.
+
+---
+
+## 📸 **Screenshots**
+(Here you can add a few screenshots of the app interface)
+
+---
+
+## 📝 **License**
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🤝 **Contributing**
+Feel free to fork this project and make improvements. If you want to contribute, you can create an issue or submit a pull request. Any feedback or suggestions are welcome!
+
+---
+
+## 📫 **Contact**
+- GitHub
+- LinkedIn
+
+---
+
+## 💡 **Next Steps / Future Improvements**
+- Add more test coverage for backend API.
+- Implement a payment system for real-time order processing.
+- Enhance authentication with OAuth (e.g., Google or Facebook login).
+- Add more animations and interactions for a richer user experience.
